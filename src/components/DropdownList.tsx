@@ -5,10 +5,10 @@ import 'tailwindcss/tailwind.css'
 
 interface IDropdownListProps {
   filterText: string
-  minimumSearchQuery: number
+  minimumSearchQuery?: number
   data: IObjectItem[]
-  emptySearchPhrase: string
-  noResultsPhrase: string
+  emptySearchPhrase?: string
+  noResultsPhrase?: string
   handleClick: (item: IObjectItem) => void
   dropdownClassnames: string
   loading?: boolean
@@ -44,10 +44,11 @@ export default function DropdownList({
 
   return (
     <ul className={dropdownClassnames} id="dropdown-list">
-      {filterText.length < minimumSearchQuery && (
+      {minimumSearchQuery && filterText.length < minimumSearchQuery && (
         <div className="p-5 text-gray-400">{emptySearchPhrase}</div>
       )}
-      {filterText.length >= minimumSearchQuery && data?.length > 0 && !loading
+      {!minimumSearchQuery ||
+      (filterText.length >= minimumSearchQuery && data?.length > 0 && !loading)
         ? data.map((item: IObjectItem, index: number) => {
             return (
               <li

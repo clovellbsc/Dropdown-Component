@@ -19,8 +19,6 @@ export default function Item({
 }: IDropdownItemProps) {
   const classnames = `flex gap-2.5 cursor-pointer w-full h-full text-sm pl-5 py-1 items-center`
 
-  console.log('classname', classnames)
-
   if (typeof item === 'string') {
     return (
       <div
