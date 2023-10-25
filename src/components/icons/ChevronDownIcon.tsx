@@ -12,13 +12,15 @@ const ChevronDownIcon = ({
 }) => {
   return (
     <svg
-      className={className}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
       fill={fill}
+      className={className}
       onClick={onClick}
     >
-      <path d="M12 16.59l-4.29-4.29-1.41 1.41L12 18.41l5.7-5.7-1.41-1.41z" />
+      <path
+        fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+      />
     </svg>
   )
 }

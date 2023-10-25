@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export interface IObjectItem {
   icon?: {
     alt: string
@@ -35,6 +37,22 @@ interface IAsyncState {
   data: IObjectItem[]
 }
 
+interface IStylingClassnames {
+  container?: string
+  input?: string
+  dropdown?: string
+  iconColour?: string
+  rounded?: string
+  shadow?: string
+  highlightColor?: string
+  highlightTextColor?: string
+  multi?: {
+    selectedItemContainer?: string
+    selectedItemIconBox?: string
+    selectedItemIcon?: string
+  }
+}
+
 interface IDropdownProps {
   placeholder: string
   items?: IObjectItem[]
@@ -52,16 +70,7 @@ interface IDropdownProps {
   clearable?: boolean
 
   roundedClass?: string
-  stylingClassnames?: {
-    container?: string
-    input?: string
-    dropdown?: string
-    iconColour?: string
-    rounded?: string
-    shadow?: string
-    highlightColor?: string
-    highlightTextColor?: string
-  }
+  stylingClassnames?: IStylingClassnames
 
   isMulti?: boolean
 }
@@ -77,14 +86,8 @@ interface IUseDropdownProps {
 
   asyncConfig?: IAsyncConfig
 
-  stylingClassnames?: {
-    container?: string
-    input?: string
-    dropdown?: string
-    iconColour?: string
-    rounded?: string
-    shadow?: string
-    highlightColor?: string
-    highlightTextColor?: string
-  }
+  stylingClassnames?: IStylingClassnames
+
+  isMulti?: boolean
+  children?: ReactNode
 }

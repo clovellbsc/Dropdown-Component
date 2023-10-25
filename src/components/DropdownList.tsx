@@ -14,7 +14,7 @@ interface IDropdownListProps {
   loading?: boolean
   highlightedIndex?: number
   handleMouseOver: (index: number) => void
-  selected: IObjectItem | null
+  selected: IObjectItem | null | IObjectItem[]
   highlightColor: string
   highlightTextColor: string
 }
@@ -59,13 +59,36 @@ export default function DropdownList({
                 onMouseOver={() => handleMouseOver(index)}
                 tabIndex={-1}
                 id={`dropdown-item-${index}`}
-                className="focus:outline-none"
+                // className="focus:outline-none"
                 onMouseDown={(e) => e.preventDefault()}
+                role="option"
+                aria-describedby="dropdown-list"
+                aria-selected={
+                  String(
+                    Array.isArray(selected)
+                      ? !!selected.find((i) => i.value === item.value)
+                      : selected?.value === item.value
+                  ) as 'true' | 'false'
+                }
+                aria-current={
+                  String(index === highlightedIndex) as 'true' | 'false'
+                }
+                className={`focus:outline-none flex gap-2.5 cursor-pointer w-full h-full text-sm pl-5 py-1 items-center`}
+                style={{
+                  backgroundColor:
+                    index === highlightedIndex ? highlightColor : 'transparent',
+                  color:
+                    index === highlightedIndex ? highlightTextColor : 'inherit',
+                }}
               >
                 <Item
                   item={item}
                   highlighted={index === highlightedIndex}
-                  selected={selected?.value === item.value}
+                  selected={
+                    Array.isArray(selected)
+                      ? !!selected.find((i) => i.value === item.value)
+                      : selected?.value === item.value
+                  }
                   highlightColor={highlightColor}
                   highlightTextColor={highlightTextColor}
                 />

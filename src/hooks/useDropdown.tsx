@@ -1,4 +1,4 @@
-import { IUseDropdownProps, IObjectItem } from '@/types/dropdown'
+import { IUseDropdownProps, IObjectItem } from '../types/dropdown'
 import React, {
   ReactNode,
   useCallback,
@@ -9,8 +9,9 @@ import React, {
 import useClickOutside from './useClickOutside'
 import useDropdownData from './useDropdownData'
 import { twMerge } from 'tailwind-merge'
-import debounce from '@/helpers/debouncer'
-import DropdownList from '@/components/DropdownList'
+import debounce from '../helpers/debouncer'
+import DropdownList from '../components/DropdownList'
+import useMultiDropdown from './useMultiDropdown'
 
 interface IAsyncState {
   loading: boolean
@@ -28,6 +29,7 @@ function useDropdown({
   minimumSearchQuery = 1,
   asyncConfig,
   stylingClassnames,
+  isMulti,
 }: IUseDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleToggle = () => {
@@ -77,6 +79,13 @@ function useDropdown({
     iconColour: 'black',
     rounded: 'rounded',
     shadow: 'shadow-md',
+    multi: {
+      selectedItemContainer:
+        'relative flex items-center justify-center px-2 py-1 mr-2 text-sm text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300',
+      selectedItemIconBox:
+        'absolute right-0 top-0 translate-x-1/2 bg-gray-100 w-fit h-fit shadow-md group p-0.5 rounded-md flex justify-center items-center z-10 group-hover:bg-gray-200 transition-all duration-300',
+      selectedItemIcon: 'w-3 h-3 cursor-pointer',
+    },
   }
 
   const combinedClasses = {
@@ -86,15 +95,24 @@ function useDropdown({
     iconColour: stylingClassnames?.iconColour ?? defaultClasses.iconColour,
     rounded: twMerge(defaultClasses.rounded, stylingClassnames?.rounded),
     shadow: twMerge(defaultClasses.shadow, stylingClassnames?.shadow),
+    multi: {
+      selectedItemContainer: twMerge(
+        defaultClasses.multi.selectedItemContainer,
+        stylingClassnames?.multi?.selectedItemContainer
+      ),
+      selectedItemIconBox: twMerge(
+        defaultClasses.multi.selectedItemIconBox,
+        stylingClassnames?.multi?.selectedItemIconBox
+      ),
+      selectedItemIcon: twMerge(
+        defaultClasses.multi.selectedItemIcon,
+        stylingClassnames?.multi?.selectedItemIcon
+      ),
+    },
   }
 
   const {
-    // container = 'inline-block w-full text-left bg-white rounded cursor-pointer max-w-screen table-border',
-    // input = 'absolute top-0 left-0 w-[90%] max-h-full px-5 py-2 text-sm bg-white outline-none',
     dropdown = 'absolute bottom-0 left-0 z-10 w-full translate-y-full h-fit dropdown-border bg-white',
-    // iconColour = 'black',
-    // rounded = 'rounded',
-    // shadow = '',
   } = combinedClasses
 
   useEffect(() => {
@@ -115,53 +133,81 @@ function useDropdown({
     setHighlightedIndex(index)
   }
 
+  const {
+    selectedItems,
+    handleSelection,
+    handleDeselection,
+    handleRemoveAllSelected,
+  } = useMultiDropdown({
+    selectRef,
+    dropdownRef,
+    inputRef,
+  })
+
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'ArrowDown') {
-        // Move down the list
-        setHighlightedIndex((prevIndex) => {
-          if (items) {
-            const newIndex =
-              prevIndex < filteredItems.length - 1 ? prevIndex + 1 : prevIndex
-            document.getElementById(`dropdown-item-${newIndex}`)?.focus()
-            return newIndex
-          } else {
-            const newIndex =
-              prevIndex < asyncState.data.length - 1 ? prevIndex + 1 : prevIndex
-            document.getElementById(`dropdown-item-${newIndex}`)?.focus()
-            return newIndex
-          }
-        })
+        handleArrowDown()
       } else if (e.key === 'ArrowUp') {
-        // Move up the list
-        setHighlightedIndex((prevIndex) => {
-          if (prevIndex > 0) {
-            const newIndex = prevIndex - 1
-            document.getElementById(`dropdown-item-${newIndex}`)?.focus()
-            return newIndex
-          } else if (prevIndex === 0 && searchable) {
-            inputRef.current?.focus()
-            return prevIndex
-          } else {
-            return prevIndex
-          }
-        })
+        handleArrowUp()
       } else if (e.key === 'Enter') {
-        // Select the highlighted option
-        if (
-          highlightedIndex >= 0 &&
-          (filteredItems
-            ? highlightedIndex < filteredItems.length
-            : asyncState.data.length)
-        ) {
-          handleItemClick(
-            filteredItems
-              ? filteredItems[highlightedIndex]
-              : asyncState.data[highlightedIndex]
-          )
-        }
-        setIsOpen(false)
+        handleEnter()
       }
+    }
+
+    function handleArrowDown() {
+      setHighlightedIndex((prevIndex) => {
+        const maxIndex = getMaxIndex()
+        const newIndex = prevIndex < maxIndex ? prevIndex + 1 : prevIndex
+        focusOnItem(newIndex)
+        return newIndex
+      })
+    }
+
+    function handleArrowUp() {
+      setHighlightedIndex((prevIndex) => {
+        const newIndex = prevIndex > 0 ? prevIndex - 1 : 0
+        if (prevIndex === 0 && searchable) {
+          focusOnInput()
+        } else {
+          focusOnItem(newIndex)
+        }
+        return newIndex
+      })
+    }
+
+    function handleEnter() {
+      const maxIndex = getMaxIndex()
+      console.log('maxIndex', maxIndex)
+      if (highlightedIndex >= 0 && highlightedIndex <= maxIndex) {
+        console.log('passed')
+        const selectedItem = getSelectedItem()
+        handleSelect(selectedItem)
+      }
+      setIsOpen(false)
+    }
+
+    const handleSelect = (item: IObjectItem) => {
+      isMulti ? handleSelection(item) : handleItemClick(item)
+      setIsOpen(false)
+    }
+
+    function getMaxIndex() {
+      return items ? filteredItems.length - 1 : asyncState.data.length - 1
+    }
+
+    function getSelectedItem() {
+      return items
+        ? filteredItems[highlightedIndex]
+        : asyncState.data[highlightedIndex]
+    }
+
+    function focusOnItem(index: number) {
+      document.getElementById(`dropdown-item-${index}`)?.focus()
+    }
+
+    function focusOnInput() {
+      inputRef.current?.focus()
     }
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown)
@@ -256,6 +302,20 @@ function useDropdown({
         highlightTextColor={stylingClassnames?.highlightTextColor ?? '#fff'}
       />
     )
+  } else if (isMulti) {
+    dropdownList = (
+      <DropdownList
+        filterText={filterText}
+        data={filteredItems}
+        handleClick={handleSelection}
+        dropdownClassnames={dropdown}
+        highlightedIndex={highlightedIndex}
+        handleMouseOver={handleMouseOver}
+        selected={selectedItems}
+        highlightColor={stylingClassnames?.highlightColor ?? '#0000FF'}
+        highlightTextColor={stylingClassnames?.highlightTextColor ?? '#fff'}
+      />
+    )
   } else {
     dropdownList = (
       <DropdownList
@@ -284,17 +344,20 @@ function useDropdown({
     isOpen,
     setIsOpen,
     handleToggle,
-    selectedItem,
+    selectedItem: isMulti ? selectedItems : selectedItem,
     filterText,
     setFilterText,
     inputRef,
     selectRef,
     dropdownRef,
     asyncState,
-    handleRemoveSelected,
+    handleRemoveSelected: isMulti
+      ? handleRemoveAllSelected
+      : handleRemoveSelected,
     classnames: combinedClasses,
     handleInputChange,
     dropdownList,
+    handleRemoveSingle: handleDeselection,
   }
 }
 

@@ -13,7 +13,7 @@ interface IDropdownItemProps {
 export default function Item({
   item,
   highlighted,
-  selected,
+  // selected,
   highlightColor,
   highlightTextColor,
 }: IDropdownItemProps) {
@@ -22,10 +22,6 @@ export default function Item({
   if (typeof item === 'string') {
     return (
       <div
-        role="option"
-        aria-describedby="dropdown-list"
-        aria-selected={String(selected) as 'true' | 'false'}
-        aria-current={String(highlighted) as 'true' | 'false'}
         className={classnames}
         style={{
           backgroundColor: highlighted ? highlightColor : 'transparent',
@@ -38,10 +34,6 @@ export default function Item({
   } else {
     return (
       <div
-        role="option"
-        aria-describedby="dropdown-list"
-        aria-selected={String(selected) as 'true' | 'false'}
-        aria-current={String(highlighted) as 'true' | 'false'}
         className={classnames}
         style={{
           backgroundColor: highlighted ? highlightColor : 'transparent',

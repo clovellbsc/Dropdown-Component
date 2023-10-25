@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.ts', // The entry file
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'ChrisDropdownComponent.js',
+    filename: 'index.js',
     library: 'ChrisDropdown',
     libraryTarget: 'umd',
     globalObject: 'this',

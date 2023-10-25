@@ -3,7 +3,8 @@ import DropdownToggle from './DropdownToggle'
 import React from 'react'
 import '../style.css'
 import 'tailwindcss/tailwind.css'
-import useDropdown from '@/hooks/useDropdown'
+import useDropdown from '../hooks/useDropdown'
+import MultiDropdownToggle from './MultiDropdownToggle'
 
 /**
  *
@@ -39,7 +40,6 @@ export default function Dropdown({
   clearable = true,
   isMulti = false,
 }: IDropdownProps) {
-  console.log('extracted logic and using dropdown list for all dropdowns')
   const {
     isOpen,
     setIsOpen,
@@ -55,6 +55,7 @@ export default function Dropdown({
     classnames,
     handleInputChange,
     dropdownList,
+    handleRemoveSingle,
   } = useDropdown({
     items,
     initialValue,
@@ -65,7 +66,10 @@ export default function Dropdown({
     minimumSearchQuery,
     asyncConfig,
     stylingClassnames,
+    isMulti,
   })
+
+  console.log('selectedItem', selectedItem)
 
   return (
     <div
@@ -83,8 +87,12 @@ export default function Dropdown({
           tabIndex={-1}
           aria-hidden="true"
           id="shadow-select"
-          name={name ?? selectedItem?.label}
-          value={selectedItem?.value}
+          name={name}
+          value={
+            Array.isArray(selectedItem)
+              ? selectedItem.map((item) => item.value)
+              : selectedItem?.value
+          }
           className="opacity-0 sr-only"
           onChange={onChange}
           multiple={isMulti}
@@ -113,26 +121,47 @@ export default function Dropdown({
                 )
               })}
         </select>
-        <DropdownToggle
-          clearable={clearable}
-          label={selectedItem?.label ?? placeholder}
-          placeholder={placeholder}
-          handleRemoveSelected={handleRemoveSelected}
-          removeSearchText={() => {
-            setFilterText('')
-          }}
-          isOpen={isOpen}
-          iconColour={classnames.iconColour}
-          handleToggle={handleToggle}
-        />
-        {searchable && (
+        {Array.isArray(selectedItem) ? (
+          <MultiDropdownToggle
+            clearable={clearable}
+            label={selectedItem.length > 0 ? selectedItem : placeholder}
+            placeholder={placeholder}
+            handleRemoveSelected={handleRemoveSelected}
+            removeSearchText={() => {
+              setFilterText('')
+            }}
+            isOpen={isOpen}
+            iconColour={classnames.iconColour}
+            handleToggle={handleToggle}
+            handleRemoveSingle={handleRemoveSingle}
+            stylingClassnames={classnames}
+          />
+        ) : (
+          <DropdownToggle
+            clearable={clearable}
+            label={selectedItem?.label ?? placeholder}
+            placeholder={placeholder}
+            handleRemoveSelected={handleRemoveSelected}
+            removeSearchText={() => {
+              setFilterText('')
+            }}
+            isOpen={isOpen}
+            iconColour={classnames.iconColour}
+            handleToggle={handleToggle}
+          />
+        )}
+        {searchable && !isMulti && (
           <input
             id="dropdown-search"
             onFocus={() => setIsOpen(true)}
             onBlur={() => setIsOpen(false)}
             className={`${classnames.input} ${classnames.rounded} bg-red-500`}
             type="search"
-            placeholder={selectedItem?.label || placeholder}
+            placeholder={
+              Array.isArray(selectedItem)
+                ? placeholder
+                : selectedItem?.label || placeholder
+            }
             value={filterText}
             onChange={handleInputChange}
             onClick={(e) => e.stopPropagation()}

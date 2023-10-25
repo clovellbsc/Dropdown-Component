@@ -12,13 +12,15 @@ const ChevronUpIcon = ({
 }) => {
   return (
     <svg
-      className={className}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
       fill={fill}
+      className={className}
       onClick={onClick}
     >
-      <path d="M12 7.41l4.29 4.29 1.41-1.41L12 4.59 6.3 10.29l1.41 1.41z" />
+      <path
+        fill-rule="evenodd"
+        d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"
+      />
     </svg>
   )
 }
