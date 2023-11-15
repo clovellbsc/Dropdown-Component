@@ -1,5 +1,4 @@
 import React from 'react'
-import { ChevronDownIcon, ChevronUpIcon, XIcon } from './icons'
 import 'tailwindcss/tailwind.css'
 
 interface IProps {

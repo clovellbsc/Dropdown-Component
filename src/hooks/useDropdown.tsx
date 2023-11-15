@@ -153,9 +153,9 @@ function useDropdown({
         : asyncState.data[highlightedIndex]
     }
 
-    const focusOnItem = (index: number) => {
-      document.getElementById(`dropdown-item-${index}`)?.focus()
-    }
+    // const focusOnItem = (index: number) => {
+    //   document.getElementById(`dropdown-item-${index}`)?.focus()
+    // }
 
     const focusOnInput = () => {
       inputRef.current?.focus()

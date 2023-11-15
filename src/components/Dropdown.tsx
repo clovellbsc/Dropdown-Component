@@ -1,5 +1,4 @@
 import { IDropdownProps } from '../types/dropdown'
-import DropdownToggle from './DropdownToggle'
 import React from 'react'
 import '../style.css'
 import 'tailwindcss/tailwind.css'
