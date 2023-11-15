@@ -19,11 +19,6 @@ export default function useDropdownData() {
     if (error) return { error }
 
     const response = data?.data?.map((item: any) => {
-      console.log(
-        'reduce',
-        Array.isArray(label) &&
-          label.reduce((acc, curr) => `${acc} ${item[curr]}`, '')
-      )
       return {
         label:
           typeof label === 'string'

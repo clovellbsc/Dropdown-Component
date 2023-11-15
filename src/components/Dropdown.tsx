@@ -19,7 +19,7 @@ import MultiDropdownToggle from './MultiDropdownToggle'
  * @param noResultsPhrase - A string that is displayed when the search input returns no results - optional - defaults to "No items match your search"
  * @param minimumSearchQuery - A number that determines the minimum number of characters required to trigger the search - optional - defaults to 1
  * @param stylingClassnames - An object that contains the classnames for the dropdown container, input, dropdown, iconColour, rounded and shadow - optional
- * @param asyncConfig - An object that contains the label, url, value and query for the async dropdown uses the http helper - optional
+ * @param asyncFunction - A function to handle the async call to get the dropdown data, takes the search query as an argument, should return an array of objects {label: string, value: string} - optional
  * @param clearable - A boolean that determines whether the dropdown can be cleared - optional - defaults to true
  * @returns The dropdown component
  */
@@ -35,7 +35,7 @@ export default function Dropdown({
   emptySearchPhrase = 'Start typing to search',
   noResultsPhrase = 'No items match your search',
   minimumSearchQuery = 1,
-  asyncConfig,
+  asyncFunction,
   stylingClassnames,
   clearable = true,
   isMulti = false,
@@ -64,7 +64,7 @@ export default function Dropdown({
     emptySearchPhrase,
     noResultsPhrase,
     minimumSearchQuery,
-    asyncConfig,
+    asyncFunction,
     stylingClassnames,
     isMulti,
   })

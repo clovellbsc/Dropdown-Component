@@ -16,19 +16,18 @@ export type ObjectClickHandler = (
   e: React.ChangeEvent<HTMLSelectElement>
 ) => void
 
-interface IAsyncConfig {
-  label: string | Array<string>
-  url: string
-  value?: string
-  query?: {
-    [key: string]: any
-  }
-}
+// interface IAsyncConfig {
+//   label: string | Array<string>
+//   url: string
+//   value?: string
+//   query?: {
+//     [key: string]: any
+//   }
+// }
 
-interface IAsyncState {
-  loading: boolean
-  error: null | Error
-  data: IObjectItem[]
+interface IAsyncFunctionReturn {
+  error?: null | Error
+  data?: IObjectItem[]
 }
 
 interface IAsyncState {
@@ -65,7 +64,7 @@ interface IDropdownProps {
   name?: string
   initialValue?: string
 
-  asyncConfig?: IAsyncConfig
+  asyncFunction?: (query: string) => Promise<IAsyncFunctionReturn>
 
   clearable?: boolean
 
@@ -84,7 +83,7 @@ interface IUseDropdownProps {
   alternate?: boolean
   initialValue?: string
 
-  asyncConfig?: IAsyncConfig
+  asyncFunction?: (query: string) => Promise<IAsyncFunctionReturn>
 
   stylingClassnames?: IStylingClassnames
 
