@@ -5,6 +5,7 @@ import '../style.css'
 import 'tailwindcss/tailwind.css'
 import useDropdown from '../hooks/useDropdown'
 import MultiDropdownToggle from './MultiDropdownToggle'
+import { ChevronDownIcon, ChevronUpIcon, XIcon } from './icons'
 
 /**
  *
@@ -69,11 +70,18 @@ export default function Dropdown({
     isMulti,
   })
 
-  console.log('selectedItem', selectedItem)
+  const label = Array.isArray(selectedItem)
+    ? selectedItem?.length > 0
+      ? selectedItem
+      : placeholder
+    : selectedItem?.label ?? placeholder
+
+  const iconClassnames =
+    'w-5 h-5 transition-all cursor-pointer duration-300 ease-in-out'
 
   return (
     <div
-      className={`w-full text-black`}
+      className={`w-full text-black relative`}
       ref={dropdownRef}
       role="listbox"
       aria-label={placeholder}
@@ -123,34 +131,18 @@ export default function Dropdown({
         </select>
         {Array.isArray(selectedItem) ? (
           <MultiDropdownToggle
-            clearable={clearable}
             label={selectedItem.length > 0 ? selectedItem : placeholder}
-            placeholder={placeholder}
-            handleRemoveSelected={handleRemoveSelected}
-            removeSearchText={() => {
-              setFilterText('')
-            }}
-            isOpen={isOpen}
             iconColour={classnames.iconColour}
-            handleToggle={handleToggle}
             handleRemoveSingle={handleRemoveSingle}
             stylingClassnames={classnames}
+            searchable={searchable}
           />
         ) : (
-          <DropdownToggle
-            clearable={clearable}
-            label={selectedItem?.label ?? placeholder}
-            placeholder={placeholder}
-            handleRemoveSelected={handleRemoveSelected}
-            removeSearchText={() => {
-              setFilterText('')
-            }}
-            isOpen={isOpen}
-            iconColour={classnames.iconColour}
-            handleToggle={handleToggle}
-          />
+          <div className="p-1.5 flex justify-between items-center select-none bg-transparent w-full">
+            <p>{selectedItem?.label ?? placeholder}</p>
+          </div>
         )}
-        {searchable && !isMulti && (
+        {searchable && (
           <input
             id="dropdown-search"
             onFocus={() => setIsOpen(true)}
@@ -169,6 +161,31 @@ export default function Dropdown({
             autoComplete="off"
           />
         )}
+        <div className="absolute right-0 flex top-3.5">
+          {label !== placeholder && clearable && (
+            <XIcon
+              fill={classnames?.iconColour ?? '#000'}
+              className={iconClassnames}
+              onClick={() => {
+                handleRemoveSelected && handleRemoveSelected()
+                setFilterText('')
+              }}
+            />
+          )}
+          {isOpen ? (
+            <ChevronUpIcon
+              fill={classnames?.iconColour ?? '#000'}
+              className={iconClassnames + 'rotate'}
+              onClick={handleToggle}
+            />
+          ) : (
+            <ChevronDownIcon
+              fill={classnames?.iconColour ?? '#000'}
+              className={iconClassnames + 'rotate-back'}
+              onClick={handleToggle}
+            />
+          )}
+        </div>
         {isOpen && dropdownList}
       </div>
     </div>
