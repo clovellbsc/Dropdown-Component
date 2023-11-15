@@ -46,6 +46,7 @@ interface IStylingClassnames {
   highlightColor?: string
   highlightTextColor?: string
   multi?: {
+    multiLabelContainer?: string
     selectedItemContainer?: string
     selectedItemIconBox?: string
     selectedItemIcon?: string

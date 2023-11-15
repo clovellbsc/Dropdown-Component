@@ -1,23 +1,30 @@
 import { twMerge } from 'tailwind-merge'
 import { IStylingClassnames } from '../types/dropdown'
 
-function useStyling(stylingClassnames?: IStylingClassnames) {
+function useStyling({
+  stylingClassnames,
+  isMulti,
+}: {
+  stylingClassnames?: IStylingClassnames
+  isMulti?: boolean
+}) {
   const defaultClasses = {
-    container:
-      'inline-block w-full text-left bg-white rounded cursor-pointer max-w-screen border border-gray-400',
-    input:
-      'absolute top-0 left-0 w-[90%] max-h-full px-5 py-2 text-sm bg-white outline-none',
+    container: `${
+      isMulti ? 'flex' : 'inline-block'
+    } w-full text-left bg-white rounded cursor-pointer max-w-screen border border-gray-400 relative py-1 h-fit`,
+    input: `${
+      isMulti ? 'flex w-fit' : 'absolute top-0 left-0 w-[90%]'
+    } h-full px-5 py-2 text-sm bg-white outline-none`,
     dropdown:
-      'absolute bottom-0 left-0 z-10 w-full translate-y-full h-fit dropdown-border bg-white',
+      'absolute bottom-0 left-0 z-[1] w-full translate-y-full h-fit dropdown-border bg-white',
     iconColour: 'black',
     rounded: 'rounded',
     shadow: 'shadow-md',
     multi: {
-      selectedItemContainer:
-        'relative flex items-center justify-center px-2 py-1 mr-2 text-sm text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300',
-      selectedItemIconBox:
-        'absolute right-0 top-0 translate-x-1/2 bg-gray-100 w-fit h-fit shadow-md group p-0.5 rounded-md flex justify-center items-center z-10 group-hover:bg-gray-200 transition-all duration-300',
-      selectedItemIcon: 'w-3 h-3 cursor-pointer',
+      multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`,
+      selectedItemContainer: `flex items-center relative gap-x-2 justify-center z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`,
+      selectedItemIconBox: 'bg-transparent w-fit h-fit',
+      selectedItemIcon: 'w-4 h-4 cursor-pointer',
     },
   }
 
@@ -29,6 +36,10 @@ function useStyling(stylingClassnames?: IStylingClassnames) {
     rounded: twMerge(defaultClasses.rounded, stylingClassnames?.rounded),
     shadow: twMerge(defaultClasses.shadow, stylingClassnames?.shadow),
     multi: {
+      multiLabelContainer: twMerge(
+        defaultClasses.multi.multiLabelContainer,
+        stylingClassnames?.multi?.multiLabelContainer
+      ),
       selectedItemContainer: twMerge(
         defaultClasses.multi.selectedItemContainer,
         stylingClassnames?.multi?.selectedItemContainer

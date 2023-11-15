@@ -58,7 +58,10 @@ function useDropdown({
     minimumSearchQuery,
   })
 
-  const { combinedClasses } = useStyling(stylingClassnames)
+  const { combinedClasses } = useStyling({
+    stylingClassnames,
+    isMulti,
+  })
 
   const handleItemClick = useCallback((item: IObjectItem | null) => {
     setSelectedItem(item)
@@ -94,7 +97,7 @@ function useDropdown({
   }
 
   useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown') {
         handleArrowDown()
       } else if (e.key === 'ArrowUp') {
@@ -104,34 +107,33 @@ function useDropdown({
       }
     }
 
-    function handleArrowDown() {
+    const handleArrowDown = () => {
       setHighlightedIndex((prevIndex) => {
         const maxIndex = getMaxIndex()
         const newIndex = prevIndex < maxIndex ? prevIndex + 1 : prevIndex
-        focusOnItem(newIndex)
+        // focusOnItem(newIndex)
         return newIndex
       })
     }
 
-    function handleArrowUp() {
+    const handleArrowUp = () => {
       setHighlightedIndex((prevIndex) => {
         const newIndex = prevIndex > 0 ? prevIndex - 1 : 0
         if (prevIndex === 0 && searchable) {
           focusOnInput()
         } else {
-          focusOnItem(newIndex)
+          // focusOnItem(newIndex)
         }
         return newIndex
       })
     }
 
-    function handleEnter() {
+    const handleEnter = () => {
       const maxIndex = getMaxIndex()
-      console.log('maxIndex', maxIndex)
       if (highlightedIndex >= 0 && highlightedIndex <= maxIndex) {
-        console.log('passed')
         const selectedItem = getSelectedItem()
         handleSelect(selectedItem)
+        setFilterText('')
       }
       setIsOpen(false)
     }
@@ -141,21 +143,21 @@ function useDropdown({
       setIsOpen(false)
     }
 
-    function getMaxIndex() {
+    const getMaxIndex = () => {
       return items ? filteredItems.length - 1 : asyncState.data.length - 1
     }
 
-    function getSelectedItem() {
+    const getSelectedItem = () => {
       return items
         ? filteredItems[highlightedIndex]
         : asyncState.data[highlightedIndex]
     }
 
-    function focusOnItem(index: number) {
+    const focusOnItem = (index: number) => {
       document.getElementById(`dropdown-item-${index}`)?.focus()
     }
 
-    function focusOnInput() {
+    const focusOnInput = () => {
       inputRef.current?.focus()
     }
     if (isOpen) {
