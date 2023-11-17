@@ -123,15 +123,18 @@ Another key feature of the async dropdown is that you can pass the minimumSearch
 This is the minimum number of characters the user has to type into the search field in order for the asyncFunction to be triggered.
 This can be useful if you do not want an excessive number of results returned to the dropdown.
 A message will be displayed whilst the user has not reached the minimumSearchQuery, eg:
+
 <img width="622" alt="Screenshot 2023-11-16 at 10 16 59" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/a6a42bb7-92e3-49af-b300-5ce300d6bb17">
 
 To customise the message displayed whilst the user has not met the minimumSearchQuery, you can pass the prop emptySearchPhrase with a string that will be displayed instead.
 By default the message is: 'Start typing to search'
 
 Whilst the data is loading from the backend there will be a message displayed simply stating 'Loading results', this currently cannot be overwritten.
+
 <img width="633" alt="Screenshot 2023-11-16 at 10 24 42" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/2937a2b1-e676-4855-953d-61c77424f77f">
 
 If there are no results returned from the asyncFunction then the following shall be displayed
+
 <img width="619" alt="Screenshot 2023-11-16 at 10 26 34" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/3d42da00-a7dc-474a-80cb-5e6338b2ccd7">
 
 This message can be changed by passing in the noResultsPhrase prop, which takes a string that will be displayed.
