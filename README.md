@@ -4,6 +4,7 @@
 <img width="619" alt="Screenshot 2023-11-16 at 09 18 42" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/c5f0fbb4-edd9-4523-9aa0-7e832adf567c">
 
 For a basic dropdown you can use a similar set up to the dropdown below:
+
 ` <Dropdown
     placeholder="Select your choice"
     items={items}
@@ -13,9 +14,11 @@ For a basic dropdown you can use a similar set up to the dropdown below:
 `
 
 The Placeholder prop will be the text displayed when there is no item selected:
+
 <img width="624" alt="Screenshot 2023-11-16 at 09 05 39" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/10883225-b99d-4046-9de0-c8d38d34bc90">
 
 The items prop is the list of items that will appear in the dropdown. This takes a label and value, with an optional icon object. These need to be in the format of:
+
 ` icon?: {
     alt: string
     url: string
@@ -25,17 +28,20 @@ The items prop is the list of items that will appear in the dropdown. This takes
 `
 
 The onChange handler exposes the select event object for use for example in the function where e.target.value is assigned to state: 
+
 `onChange={(e: ChangeEvent<HTMLSelectElement>) => {
      setSelectedItem(() => e.target.value)
     }}`
 
 The clearable prop allows the dropdown to be cleared, this by default is set to true, however if once an item is selected, you do not wish the dropdown to be clearable pass false to the clearable prop:
+
 `clearable={false}`
 
 ### Multiple Select Basic Usage
 <img width="624" alt="Screenshot 2023-11-16 at 09 20 24" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/4eee797e-a253-4780-b08c-f3b6220669ee">
 
 For a basic dropdown you can use a similar set up to the dropdown below, very similar to the basic usage but pass the isMulti prop, which is false by default:
+
 `<Dropdown
   placeholder="Select your choice"
   items={items}
@@ -47,6 +53,7 @@ For a basic dropdown you can use a similar set up to the dropdown below, very si
 By passing the searchable prop, you can make dropdown searchable, this can be used across all versions of the dropdown. Searchable by default is false.
 
 #### Basic Dropdown: 
+
 ` <Dropdown
     placeholder="Select your choice"
     items={items}
@@ -58,6 +65,7 @@ By passing the searchable prop, you can make dropdown searchable, this can be us
 <img width="624" alt="Screenshot 2023-11-16 at 09 29 11" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/5e8771b8-1ae1-47a7-8e40-41efc1e5ab39">
 
 #### Multi Select Dropdown
+
 `<Dropdown
   placeholder="Select your choice"
   items={items}
@@ -65,6 +73,7 @@ By passing the searchable prop, you can make dropdown searchable, this can be us
   isMulti
   searchable
 />`
+
 <img width="623" alt="Screenshot 2023-11-16 at 09 42 45" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/8004b7af-4911-4309-b9a3-3623eef0f912">
 
 
@@ -72,6 +81,7 @@ By passing the searchable prop, you can make dropdown searchable, this can be us
 <img width="621" alt="Screenshot 2023-11-16 at 09 52 11" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/41094efe-045c-4e40-89ed-c7dda35f45d0">
 
 A simple example of the Async Dropdown is as follows:
+  
   `       
   <Dropdown
     searchable
@@ -88,6 +98,7 @@ To implement the asynchronous dropdown you will need to pass a the asyncFunction
 This prop takes a function that has exposes the filterText from within the component. 
 The filterText is the string typed into the search input. 
 The function should return an array of items in the format shown before:
+
 ` icon?: {
     alt: string
     url: string
@@ -97,6 +108,7 @@ The function should return an array of items in the format shown before:
 `
 
 An example of such a function is as follows: 
+  
   `const handleAsync = async (filterText: string) => {
     const response = await fetch(
       `https://restcountries.com/v3.1/name/${filterText}`
