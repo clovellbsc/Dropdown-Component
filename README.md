@@ -54,6 +54,7 @@ By passing the searchable prop, you can make dropdown searchable, this can be us
     searchable
   />
 `
+
 <img width="624" alt="Screenshot 2023-11-16 at 09 29 11" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/5e8771b8-1ae1-47a7-8e40-41efc1e5ab39">
 
 #### Multi Select Dropdown
