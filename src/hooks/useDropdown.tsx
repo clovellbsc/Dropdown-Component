@@ -61,11 +61,9 @@ function useDropdown({
 
   const { combinedClasses } = useStyling({
     stylingClassnames,
-    isMulti,
   })
 
   const handleItemClick = useCallback((item: IObjectItem | null) => {
-    console.log('clicked')
     setSelectedItem(item)
     setFilterText('')
     if (selectRef.current) {
