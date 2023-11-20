@@ -160,7 +160,7 @@ export default function Dropdown({
             autoComplete="off"
           />
         )}
-        <div className="absolute right-0 flex top-3.5">
+        <div className="flex h-full ml-auto">
           {label !== placeholder && clearable && (
             <XIcon
               fill={classnames?.iconColour ?? '#000'}

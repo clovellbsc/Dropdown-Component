@@ -50,6 +50,7 @@ function useDropdown({
     selectRef,
     dropdownRef,
     inputRef,
+    setFilterText,
   })
 
   const { asyncState } = useAsyncDropdown({
@@ -64,6 +65,7 @@ function useDropdown({
   })
 
   const handleItemClick = useCallback((item: IObjectItem | null) => {
+    console.log('clicked')
     setSelectedItem(item)
     setFilterText('')
     if (selectRef.current) {

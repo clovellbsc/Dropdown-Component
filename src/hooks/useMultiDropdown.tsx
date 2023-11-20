@@ -5,10 +5,12 @@ function useMultiDropdown({
   selectRef,
   dropdownRef,
   inputRef,
+  setFilterText,
 }: {
   selectRef: React.RefObject<HTMLSelectElement>
   dropdownRef: React.RefObject<HTMLInputElement>
   inputRef: React.RefObject<HTMLInputElement>
+  setFilterText: React.Dispatch<React.SetStateAction<string>>
 }) {
   const [selectedItems, setSelectedItems] = useState<IObjectItem[]>([])
 
@@ -53,6 +55,7 @@ function useMultiDropdown({
         })
         selectRef.current.dispatchEvent(new Event('change', { bubbles: true }))
       }
+      setFilterText('')
       dropdownRef.current?.blur()
       inputRef.current?.blur()
     },
