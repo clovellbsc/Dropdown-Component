@@ -84,7 +84,7 @@ export default function Dropdown({
       ref={dropdownRef}
       role="listbox"
       aria-label={placeholder}
-      tabIndex={0}
+      tabIndex={searchable ? undefined : 0}
       onFocus={() => setIsOpen(true)}
       onBlur={() => !searchable && setIsOpen(false)}
     >
@@ -158,6 +158,7 @@ export default function Dropdown({
             onClick={(e) => e.stopPropagation()}
             ref={inputRef}
             autoComplete="off"
+            tabIndex={searchable ? 0 : undefined}
           />
         )}
         <div className="flex h-full ml-auto">
