@@ -25,9 +25,12 @@ function useDropdown({
   isMulti,
 }: IUseDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const handleToggle = () => {
+  const handleToggle = (e: any) => {
+    e.stopPropagation()
+    if (isOpen) dropdownRef.current?.blur()
     setIsOpen(!isOpen)
   }
+
   const [filteredItems, setFilteredItems] = useState<Array<IObjectItem>>(
     items || []
   )
@@ -248,14 +251,6 @@ function useDropdown({
       />
     )
   }
-
-  useEffect(() => {
-    if (inputRef.current && isOpen) {
-      inputRef.current.focus()
-    } else {
-      inputRef.current && inputRef.current.blur()
-    }
-  }, [isOpen])
 
   return {
     isOpen,
