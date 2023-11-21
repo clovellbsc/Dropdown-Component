@@ -8,9 +8,9 @@ function useStyling({
 }) {
   const defaultClasses = {
     container: `flex w-full text-left bg-white rounded cursor-pointer max-w-screen border border-gray-400 relative py-1 h-fit items-center`,
-    input: `flex h-full px-5 py-2 text-sm bg-white outline-none max-w-[100%] w-1/2`,
+    input: `flex h-full px-5 py-2 text-sm bg-white outline-none max-w-[100%] flex-1`,
     dropdown:
-      'absolute bottom-0 left-0 z-[1] w-full translate-y-full h-fit dropdown-border bg-white',
+      'absolute bottom-0 left-0 z-[1] w-full translate-y-full h-fit bg-white',
     iconColour: 'black',
     rounded: 'rounded',
     shadow: 'shadow-md',
