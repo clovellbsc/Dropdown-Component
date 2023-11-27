@@ -1,6 +1,6 @@
 {
-  "name": "dropdown",
-  "version": "1.0.5",
+  "name": "dropdown-react-tailwind",
+  "version": "1.0.8",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

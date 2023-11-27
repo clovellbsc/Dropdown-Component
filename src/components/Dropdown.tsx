@@ -137,9 +137,11 @@ export default function Dropdown({
             searchable={searchable}
           />
         ) : (
-          <div className="p-1.5 flex justify-between items-center select-none bg-transparent w-full">
-            <p>{selectedItem?.label ?? placeholder}</p>
-          </div>
+          !searchable && (
+            <div className="p-1.5 flex justify-between items-center select-none bg-transparent w-full">
+              <p>{selectedItem?.label ?? placeholder}</p>
+            </div>
+          )
         )}
         {searchable && (
           <input
