@@ -186,5 +186,120 @@ The alternate dropdown allows you set a minimum search query prior to displaying
 You may also pass the emptySearchPhrase and the noResultsPhrase.
 
 
+## Styling
+To style the dropdown component you can pass through the stylingClassnames prop: 
 
+`
+    <Dropdown
+      name="receiver_id"
+      searchable
+      asyncFunction={handleAsyncRequest}
+      placeholder="Start typing..."
+      onChange={handleSelectChange}
+      minimumSearchQuery={3}
+      noResultsPhrase="No colleagues found"
+      emptySearchPhrase="Start typing..."
+      stylingClassnames={{
+        input: "border-none",
+        dropdown: "shadow-md",
+      }}
+    />
+`
+
+The way that the styling classnames works, is that it starts with the following default styling classnames:
+
+`
+  const defaultClasses = {
+    container: `flex w-full text-left bg-white rounded cursor-pointer max-w-screen border border-gray-400 relative py-1 h-fit items-center`,
+    input: `flex h-full px-5 py-2 text-sm bg-white outline-none max-w-[100%] flex-1`,
+    dropdown:
+      'absolute bottom-0 left-0 z-[1] w-full translate-y-full h-fit bg-white',
+    iconColour: 'black',
+    rounded: 'rounded',
+    shadow: 'shadow-md',
+    multi: {
+      multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`,
+      selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`,
+      selectedItemIconBox: 'bg-transparent w-fit h-fit',
+      selectedItemIcon: 'w-4 h-4 cursor-pointer',
+    },
+  }
+  `
+
+You can make additions or changes to the above styling without removing all of the classnames, this is done by utilising tailwind-merge. This therefore takes any tailwind classes that you pass to the styling classnames and overwrites any conflicting classnames on the dropdown, therefore you don't have to write all styling from scratch, if you only want to make one change.
+
+#### Container
+This is the overall container of the dropdown, which has the following default classnames
+
+`
+container: 'flex w-full text-left bg-white rounded cursor-pointer max-w-screen border border-gray-400 relative py-1 h-fit items-center'
+`
+
+#### Input
+This is the styling for the input, which is what is used for searchable dropdowns
+
+`
+input: 'flex h-full px-5 py-2 text-sm bg-white outline-none max-w-[100%] flex-1'
+`
+
+#### Dropdown
+This is the styling for the container of the dropdown list
+
+`
+dropdown: 'absolute bottom-0 left-0 z-[1] w-full translate-y-full h-fit bg-white'
+`
+
+#### Icon Colour
+As the name suggests, this is the colour of the icons, the chevrons and the X. 
+
+`
+iconColour: 'black'
+`
+
+#### Rounded
+This class is used to provide a border radius to the dropdown and container, should you wish them to be the same and not individually style them
+
+`
+rounded: 'rounded'
+`
+
+### Multi
+Multi is a group of styles for styling the multi specific styles, for example the selected items.
+
+`
+{
+    multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`,
+    selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`,
+    selectedItemIconBox: 'bg-transparent w-fit h-fit',
+    selectedItemIcon: 'w-4 h-4 cursor-pointer',
+}
+`
+
+#### Multi Label Container
+This is used to style the container of all the selected items, should you wish you could make it absolute to display the items above the dropdown should you wish
+
+`
+multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`
+`
+
+#### Selected Item Container
+This is the container for each individual selected item.
+
+`
+selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`
+`
+
+#### Selected Item Icon Box
+This is for styling the container of the icon, this is incase you do not wish for the icon to be inline in the selected item container but if you wanted to make it absolutely positioned top right of the selected item box for example
+
+`
+selectedItemIconBox: 'bg-transparent w-fit h-fit'
+`
+
+#### Selected Item Icon
+This is for styling the actual X Icon, if you want to change it's size etc.
+
+`
+selectedItemIcon: 'w-4 h-4 cursor-pointer'
+`
 
