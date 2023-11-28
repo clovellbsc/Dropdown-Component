@@ -40,6 +40,7 @@ interface IStylingClassnames {
   container?: string
   input?: string
   dropdown?: string
+  dropdownItem?: string
   iconColour?: string
   rounded?: string
   shadow?: string

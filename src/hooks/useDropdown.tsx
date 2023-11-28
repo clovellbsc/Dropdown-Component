@@ -197,6 +197,7 @@ function useDropdown({
         noResultsPhrase={noResultsPhrase}
         handleClick={handleItemClick}
         dropdownClassnames={combinedClasses.dropdown}
+        dropdownItemClassnames={combinedClasses.dropdownItem}
         loading={asyncState.loading}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
@@ -215,6 +216,7 @@ function useDropdown({
         noResultsPhrase={noResultsPhrase}
         handleClick={handleItemClick}
         dropdownClassnames={combinedClasses.dropdown}
+        dropdownItemClassnames={combinedClasses.dropdownItem}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
         selected={selectedItem}
@@ -229,6 +231,7 @@ function useDropdown({
         data={filteredItems}
         handleClick={handleSelection}
         dropdownClassnames={combinedClasses.dropdown}
+        dropdownItemClassnames={combinedClasses.dropdownItem}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
         selected={selectedItems}
@@ -243,6 +246,7 @@ function useDropdown({
         data={filteredItems}
         handleClick={handleItemClick}
         dropdownClassnames={combinedClasses.dropdown}
+        dropdownItemClassnames={combinedClasses.dropdownItem}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
         selected={selectedItem}

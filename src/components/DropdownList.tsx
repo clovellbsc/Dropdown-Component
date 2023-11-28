@@ -17,6 +17,7 @@ interface IDropdownListProps {
   selected: IObjectItem | null | IObjectItem[]
   highlightColor: string
   highlightTextColor: string
+  dropdownItemClassnames?: string
 }
 
 export default function DropdownList({
@@ -33,6 +34,7 @@ export default function DropdownList({
   selected,
   highlightColor,
   highlightTextColor,
+  dropdownItemClassnames,
 }: IDropdownListProps) {
   if (loading) {
     return (
@@ -73,13 +75,10 @@ export default function DropdownList({
                 aria-current={
                   String(index === highlightedIndex) as 'true' | 'false'
                 }
-                className={`focus:outline-none flex gap-2.5 cursor-pointer w-full h-full text-sm pl-5 py-1 items-center`}
-                style={{
-                  backgroundColor:
-                    index === highlightedIndex ? highlightColor : 'transparent',
-                  color:
-                    index === highlightedIndex ? highlightTextColor : 'inherit',
-                }}
+                className={`${
+                  index === highlightedIndex &&
+                  highlightColor + ' ' + highlightTextColor
+                }`}
               >
                 <Item
                   item={item}
@@ -91,6 +90,7 @@ export default function DropdownList({
                   }
                   highlightColor={highlightColor}
                   highlightTextColor={highlightTextColor}
+                  dropdownItemClassnames={dropdownItemClassnames}
                 />
               </li>
             )

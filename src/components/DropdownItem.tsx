@@ -8,6 +8,7 @@ interface IDropdownItemProps {
   selected: boolean
   highlightColor: string
   highlightTextColor: string
+  dropdownItemClassnames?: string
 }
 
 export default function Item({
@@ -16,13 +17,12 @@ export default function Item({
   // selected,
   highlightColor,
   highlightTextColor,
+  dropdownItemClassnames,
 }: IDropdownItemProps) {
-  const classnames = `flex gap-2.5 cursor-pointer w-full h-full text-sm pl-5 py-1 items-center`
-
   if (typeof item === 'string') {
     return (
       <div
-        className={classnames}
+        // className={classnames}
         style={{
           backgroundColor: highlighted ? highlightColor : 'transparent',
           color: highlighted ? highlightTextColor : 'inherit',
@@ -34,7 +34,7 @@ export default function Item({
   } else {
     return (
       <div
-        className={classnames}
+        className={dropdownItemClassnames}
         style={{
           backgroundColor: highlighted ? highlightColor : 'transparent',
           color: highlighted ? highlightTextColor : 'inherit',
