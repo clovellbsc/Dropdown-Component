@@ -202,8 +202,8 @@ function useDropdown({
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
         selected={selectedItem}
-        highlightColor={stylingClassnames?.highlightColor ?? '#0000FF'}
-        highlightTextColor={stylingClassnames?.highlightTextColor ?? '#fff'}
+        highlightColor={combinedClasses.highlightColor}
+        highlightTextColor={combinedClasses.highlightTextColor}
       />
     )
   } else if (alternate) {
@@ -220,8 +220,8 @@ function useDropdown({
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
         selected={selectedItem}
-        highlightColor={stylingClassnames?.highlightColor ?? '#0000FF'}
-        highlightTextColor={stylingClassnames?.highlightTextColor ?? '#fff'}
+        highlightColor={combinedClasses.highlightColor}
+        highlightTextColor={combinedClasses.highlightTextColor}
       />
     )
   } else if (isMulti) {
@@ -235,8 +235,8 @@ function useDropdown({
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
         selected={selectedItems}
-        highlightColor={stylingClassnames?.highlightColor ?? '#0000FF'}
-        highlightTextColor={stylingClassnames?.highlightTextColor ?? '#fff'}
+        highlightColor={combinedClasses.highlightColor}
+        highlightTextColor={combinedClasses.highlightTextColor}
       />
     )
   } else {
@@ -250,8 +250,8 @@ function useDropdown({
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
         selected={selectedItem}
-        highlightColor={stylingClassnames?.highlightColor ?? '#0000FF'}
-        highlightTextColor={stylingClassnames?.highlightTextColor ?? '#fff'}
+        highlightColor={combinedClasses.highlightColor}
+        highlightTextColor={combinedClasses.highlightTextColor}
       />
     )
   }

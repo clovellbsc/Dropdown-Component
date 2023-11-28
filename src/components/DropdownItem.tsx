@@ -19,31 +19,24 @@ export default function Item({
   highlightTextColor,
   dropdownItemClassnames,
 }: IDropdownItemProps) {
+  highlighted && console.log('highlighted', highlightTextColor)
   if (typeof item === 'string') {
     return (
-      <div
-        // className={classnames}
-        style={{
-          backgroundColor: highlighted ? highlightColor : 'transparent',
-          color: highlighted ? highlightTextColor : 'inherit',
-        }}
-      >
-        <p>{item}</p>
+      <div className={highlighted ? highlightColor : ''}>
+        <p className={highlighted ? highlightTextColor : ''}>{item}</p>
       </div>
     )
   } else {
     return (
       <div
-        className={dropdownItemClassnames}
-        style={{
-          backgroundColor: highlighted ? highlightColor : 'transparent',
-          color: highlighted ? highlightTextColor : 'inherit',
-        }}
+        className={
+          dropdownItemClassnames + ' ' + (highlighted ? highlightColor : '')
+        }
       >
         {item?.icon && (
           <img src={item.icon.url} alt={item.icon.alt} className="w-6" />
         )}
-        <p>{item?.label}</p>
+        <p className={highlighted ? highlightTextColor : ''}>{item?.label}</p>
       </div>
     )
   }
