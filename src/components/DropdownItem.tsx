@@ -19,7 +19,6 @@ export default function Item({
   highlightTextColor,
   dropdownItemClassnames,
 }: IDropdownItemProps) {
-  highlighted && console.log('highlighted', highlightTextColor)
   if (typeof item === 'string') {
     return (
       <div className={highlighted ? highlightColor : ''}>
