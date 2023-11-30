@@ -1,7 +1,5 @@
 import { IDropdownProps } from '../types/dropdown'
 import React from 'react'
-import '../style.css'
-import 'tailwindcss/tailwind.css'
 import useDropdown from '../hooks/useDropdown'
 import MultiDropdownToggle from './MultiDropdownToggle'
 import { ChevronDownIcon, ChevronUpIcon, XIcon } from './icons'
