@@ -17,7 +17,7 @@ function useStyling({
     rounded: 'rounded',
     shadow: 'shadow-md',
     highlightColor: 'bg-[#0000FF]',
-    highlightTextColor: 'text-[#fff]',
+    highlightTextColor: 'text-white',
     multi: {
       multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`,
       selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`,
