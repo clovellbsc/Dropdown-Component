@@ -23,6 +23,7 @@ function useDropdown({
   asyncFunction,
   stylingClassnames,
   isMulti,
+  value,
 }: IUseDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleToggle = (e: any) => {
@@ -34,9 +35,9 @@ function useDropdown({
   const [filteredItems, setFilteredItems] = useState<Array<IObjectItem>>(
     items || []
   )
-  const [selectedItem, setSelectedItem] = useState<IObjectItem | null>(
-    filteredItems.find((item) => item.value === initialValue) ?? null
-  )
+  // const [selectedItem, setSelectedItem] = useState<IObjectItem | null>(
+  //   filteredItems.find((item) => item.value === initialValue) ?? null
+  // )
   const [filterText, setFilterText] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
   const selectRef = useRef<HTMLSelectElement>(null)
@@ -67,7 +68,7 @@ function useDropdown({
   })
 
   const handleItemClick = useCallback((item: IObjectItem | null) => {
-    setSelectedItem(item)
+    // setSelectedItem(item)
     setFilterText('')
     if (selectRef.current) {
       selectRef.current.value = item?.value ? item?.value : ''
@@ -201,7 +202,7 @@ function useDropdown({
         loading={asyncState.loading}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
-        selected={selectedItem}
+        selected={items?.find((item) => item?.value === value) ?? null}
         highlightColor={combinedClasses.highlightColor}
         highlightTextColor={combinedClasses.highlightTextColor}
       />
@@ -219,7 +220,7 @@ function useDropdown({
         dropdownItemClassnames={combinedClasses.dropdownItem}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
-        selected={selectedItem}
+        selected={items?.find((item) => item?.value === value) ?? null}
         highlightColor={combinedClasses.highlightColor}
         highlightTextColor={combinedClasses.highlightTextColor}
       />
@@ -249,7 +250,7 @@ function useDropdown({
         dropdownItemClassnames={combinedClasses.dropdownItem}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
-        selected={selectedItem}
+        selected={items?.find((item) => item?.value === value) ?? null}
         highlightColor={combinedClasses.highlightColor}
         highlightTextColor={combinedClasses.highlightTextColor}
       />
@@ -260,7 +261,7 @@ function useDropdown({
     isOpen,
     setIsOpen,
     handleToggle,
-    selectedItem: isMulti ? selectedItems : selectedItem,
+    // selectedItem: isMulti ? selectedItems : selectedItem,
     filterText,
     setFilterText,
     inputRef,

@@ -37,12 +37,13 @@ export default function Dropdown({
   stylingClassnames,
   clearable = true,
   isMulti = false,
+  value,
 }: IDropdownProps) {
   const {
     isOpen,
     setIsOpen,
     handleToggle,
-    selectedItem,
+    // selectedItem,
     filterText,
     setFilterText,
     inputRef,
@@ -65,13 +66,14 @@ export default function Dropdown({
     asyncFunction,
     stylingClassnames,
     isMulti,
+    value,
   })
 
-  const label = Array.isArray(selectedItem)
-    ? selectedItem?.length > 0
-      ? selectedItem
+  const label = Array.isArray(value)
+    ? value?.length > 0
+      ? value
       : placeholder
-    : selectedItem?.label ?? placeholder
+    : items?.find((item) => item.value === value)?.label ?? placeholder
 
   const iconClassnames =
     'w-5 h-5 transition-all cursor-pointer duration-300 ease-in-out'
@@ -93,11 +95,7 @@ export default function Dropdown({
           aria-hidden="true"
           id="shadow-select"
           name={name}
-          value={
-            Array.isArray(selectedItem)
-              ? selectedItem.map((item) => item.value)
-              : selectedItem?.value
-          }
+          value={value}
           className="opacity-0 sr-only"
           onChange={onChange}
           multiple={isMulti}
@@ -126,9 +124,15 @@ export default function Dropdown({
                 )
               })}
         </select>
-        {Array.isArray(selectedItem) ? (
+        {Array.isArray(value) ? (
           <MultiDropdownToggle
-            label={selectedItem.length > 0 ? selectedItem : placeholder}
+            label={
+              value.length > 0
+                ? items?.filter((item) =>
+                    value.some((v) => v === item.value)
+                  ) ?? placeholder
+                : placeholder
+            }
             iconColour={classnames.iconColour}
             handleRemoveSingle={handleRemoveSingle}
             stylingClassnames={classnames}
@@ -137,7 +141,10 @@ export default function Dropdown({
         ) : (
           !searchable && (
             <div className="p-1.5 flex justify-between items-center select-none bg-transparent w-full">
-              <p>{selectedItem?.label ?? placeholder}</p>
+              <p>
+                {items?.find((item) => item.value === value)?.label ??
+                  placeholder}
+              </p>
             </div>
           )
         )}
@@ -149,9 +156,10 @@ export default function Dropdown({
             className={`${classnames.input} ${classnames.rounded} bg-red-500`}
             type="search"
             placeholder={
-              Array.isArray(selectedItem)
+              Array.isArray(value)
                 ? placeholder
-                : selectedItem?.label || placeholder
+                : items?.find((item) => item?.value === value)?.label ||
+                  placeholder
             }
             value={filterText}
             onChange={handleInputChange}

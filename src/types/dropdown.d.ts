@@ -74,6 +74,7 @@ interface IDropdownProps {
   stylingClassnames?: IStylingClassnames
 
   isMulti?: boolean
+  value: string | string[]
 }
 
 interface IUseDropdownProps {
@@ -91,4 +92,5 @@ interface IUseDropdownProps {
 
   isMulti?: boolean
   children?: ReactNode
+  value: string | string[]
 }
