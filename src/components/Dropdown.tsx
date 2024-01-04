@@ -7,7 +7,7 @@ import { ChevronDownIcon, ChevronUpIcon, XIcon } from './icons'
 /**
  *
  * @param items - { icon?: {alt: string, url: string}, value: string, label: string, [key: string]: any} - not needed if asyncConfig is provided
- * @param initialValue - initial value from the dropdown options
+ * @param value - current value of the dropdown
  * @param placeholder - A string that is displayed as the placeholder for the dropdown
  * @param name - A string that is used as the name for the dropdown - optional if not passed the name returned will be the label of the selected item
  * @param onChange - A function that handles the click event of a dropdown item and returns the item object selected
@@ -24,7 +24,6 @@ import { ChevronDownIcon, ChevronUpIcon, XIcon } from './icons'
 
 export default function Dropdown({
   items,
-  initialValue,
   placeholder,
   name,
   onChange,
@@ -57,7 +56,6 @@ export default function Dropdown({
     handleRemoveSingle,
   } = useDropdown({
     items,
-    initialValue,
     searchable,
     alternate,
     emptySearchPhrase,

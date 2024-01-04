@@ -84,7 +84,6 @@ interface IUseDropdownProps {
   noResultsPhrase?: string
   minimumSearchQuery?: number
   alternate?: boolean
-  initialValue?: string
 
   asyncFunction?: (query: string) => Promise<IAsyncFunctionReturn>
 

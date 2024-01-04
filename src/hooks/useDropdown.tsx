@@ -14,7 +14,6 @@ import useStyling from './useStyling'
 
 function useDropdown({
   items,
-  initialValue,
   searchable = false,
   alternate = false,
   emptySearchPhrase = 'Start typing to search',
