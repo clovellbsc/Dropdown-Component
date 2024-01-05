@@ -44,17 +44,13 @@ function useDropdown({
   useClickOutside(dropdownRef, () => setIsOpen(false))
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0)
 
-  const {
-    selectedItems,
-    handleSelection,
-    handleDeselection,
-    handleRemoveAllSelected,
-  } = useMultiDropdown({
-    selectRef,
-    dropdownRef,
-    inputRef,
-    setFilterText,
-  })
+  const { handleSelection, handleDeselection, handleRemoveAllSelected } =
+    useMultiDropdown({
+      selectRef,
+      dropdownRef,
+      inputRef,
+      setFilterText,
+    })
 
   const { asyncState } = useAsyncDropdown({
     asyncFunction,
@@ -234,7 +230,7 @@ function useDropdown({
         dropdownItemClassnames={combinedClasses.dropdownItem}
         highlightedIndex={highlightedIndex}
         handleMouseOver={handleMouseOver}
-        selected={selectedItems}
+        selected={items?.filter((item) => value?.includes(item?.value)) ?? null}
         highlightColor={combinedClasses.highlightColor}
         highlightTextColor={combinedClasses.highlightTextColor}
       />

@@ -12,13 +12,10 @@ function useMultiDropdown({
   inputRef: React.RefObject<HTMLInputElement>
   setFilterText: React.Dispatch<React.SetStateAction<string>>
 }) {
-  const [selectedItems, setSelectedItems] = useState<IObjectItem[]>([])
+  // const [selectedItems, setSelectedItems] = useState<IObjectItem[]>([])
 
   const handleDeselection = useCallback(
     (item: IObjectItem) => {
-      setSelectedItems((prev) =>
-        prev.filter((selectedItem) => selectedItem.value !== item.value)
-      )
       if (selectRef?.current?.children) {
         const childArray = Array.from(selectRef.current.children)
         childArray.forEach((child) => {
@@ -35,24 +32,26 @@ function useMultiDropdown({
 
   const handleSelection = useCallback(
     (item: IObjectItem | null) => {
-      item !== null
-        ? setSelectedItems((prev) => [...prev, item])
-        : setSelectedItems([])
       if (selectRef?.current?.children) {
         const childArray = Array.from(selectRef.current.children)
         childArray.forEach((child) => {
           const option = child as HTMLOptionElement
+          console.log('option', option)
+          console.log('item', item)
           if (item === null) {
             option.selected = false
             return
           }
           if (option.value === item.value) {
+            console.log('option.selected', option.selected)
             option.selected === true
               ? handleDeselection(item)
               : (option.selected = true)
+            console.log('option.selected after', option.selected)
             return
           }
         })
+        console.log('selectRef.current', selectRef.current)
         selectRef.current.dispatchEvent(new Event('change', { bubbles: true }))
       }
       setFilterText('')
@@ -63,7 +62,6 @@ function useMultiDropdown({
   )
 
   const handleRemoveAllSelected = () => {
-    setSelectedItems([])
     if (selectRef?.current?.children) {
       const childArray = Array.from(selectRef.current.children)
       childArray.forEach((child) => {
@@ -75,7 +73,6 @@ function useMultiDropdown({
   }
 
   return {
-    selectedItems,
     handleSelection,
     handleDeselection,
     handleRemoveAllSelected,
