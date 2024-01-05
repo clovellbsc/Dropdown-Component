@@ -1,5 +1,5 @@
 import { IObjectItem } from '../types/dropdown'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
 function useMultiDropdown({
   selectRef,
@@ -12,8 +12,6 @@ function useMultiDropdown({
   inputRef: React.RefObject<HTMLInputElement>
   setFilterText: React.Dispatch<React.SetStateAction<string>>
 }) {
-  // const [selectedItems, setSelectedItems] = useState<IObjectItem[]>([])
-
   const handleDeselection = useCallback(
     (item: IObjectItem) => {
       if (selectRef?.current?.children) {

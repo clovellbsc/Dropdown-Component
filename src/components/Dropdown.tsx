@@ -42,7 +42,6 @@ export default function Dropdown({
     isOpen,
     setIsOpen,
     handleToggle,
-    // selectedItem,
     filterText,
     setFilterText,
     inputRef,

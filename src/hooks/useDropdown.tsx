@@ -34,9 +34,6 @@ function useDropdown({
   const [filteredItems, setFilteredItems] = useState<Array<IObjectItem>>(
     items || []
   )
-  // const [selectedItem, setSelectedItem] = useState<IObjectItem | null>(
-  //   filteredItems.find((item) => item.value === initialValue) ?? null
-  // )
   const [filterText, setFilterText] = useState<string>('')
   const inputRef = useRef<HTMLInputElement>(null)
   const selectRef = useRef<HTMLSelectElement>(null)
@@ -63,7 +60,6 @@ function useDropdown({
   })
 
   const handleItemClick = useCallback((item: IObjectItem | null) => {
-    // setSelectedItem(item)
     setFilterText('')
     if (selectRef.current) {
       selectRef.current.value = item?.value ? item?.value : ''
@@ -256,7 +252,6 @@ function useDropdown({
     isOpen,
     setIsOpen,
     handleToggle,
-    // selectedItem: isMulti ? selectedItems : selectedItem,
     filterText,
     setFilterText,
     inputRef,

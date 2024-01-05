@@ -14,7 +14,6 @@ interface IDropdownItemProps {
 export default function Item({
   item,
   highlighted,
-  // selected,
   highlightColor,
   highlightTextColor,
   dropdownItemClassnames,

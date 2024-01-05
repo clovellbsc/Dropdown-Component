@@ -16,15 +16,6 @@ export type ObjectClickHandler = (
   e: React.ChangeEvent<HTMLSelectElement>
 ) => void
 
-// interface IAsyncConfig {
-//   label: string | Array<string>
-//   url: string
-//   value?: string
-//   query?: {
-//     [key: string]: any
-//   }
-// }
-
 interface IAsyncFunctionReturn {
   error?: null | Error
   data?: IObjectItem[]
