@@ -3,6 +3,7 @@ import React from 'react'
 import useDropdown from '../hooks/useDropdown'
 import MultiDropdownToggle from './MultiDropdownToggle'
 import { ChevronDownIcon, ChevronUpIcon, XIcon } from './icons'
+import mergeArraysAndRemoveDuplicates from '../helpers/mergeArraysWithoutDuplicate'
 
 /**
  *
@@ -109,7 +110,10 @@ export default function Dropdown({
                   </option>
                 )
               })
-            : asyncState.data.map((item) => {
+            : mergeArraysAndRemoveDuplicates(
+                [...asyncState.data, ...asyncState.selectedItems],
+                'value'
+              ).map((item) => {
                 return (
                   <option
                     key={item.value}
@@ -125,9 +129,13 @@ export default function Dropdown({
           <MultiDropdownToggle
             label={
               value.length > 0
-                ? items?.filter((item) =>
-                    value.some((v) => v === item.value)
-                  ) ?? placeholder
+                ? asyncFunction
+                  ? asyncState.selectedItems.filter((item) =>
+                      value.includes(item.value)
+                    ) ?? placeholder
+                  : items?.filter((item) =>
+                      value.some((v) => v === item.value)
+                    ) ?? placeholder
                 : placeholder
             }
             iconColour={classnames.iconColour}
@@ -155,6 +163,9 @@ export default function Dropdown({
             placeholder={
               Array.isArray(value)
                 ? placeholder
+                : asyncFunction
+                ? asyncState.selectedItems.find((item) => item.value === value)
+                    ?.label ?? placeholder
                 : items?.find((item) => item?.value === value)?.label ||
                   placeholder
             }

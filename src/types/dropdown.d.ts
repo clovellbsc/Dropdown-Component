@@ -25,6 +25,7 @@ interface IAsyncState {
   loading: boolean
   error: null | Error
   data: IObjectItem[]
+  selectedItems: IObjectItem[]
 }
 
 interface IStylingClassnames {

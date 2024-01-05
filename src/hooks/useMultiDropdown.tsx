@@ -34,22 +34,17 @@ function useMultiDropdown({
         const childArray = Array.from(selectRef.current.children)
         childArray.forEach((child) => {
           const option = child as HTMLOptionElement
-          console.log('option', option)
-          console.log('item', item)
           if (item === null) {
             option.selected = false
             return
           }
           if (option.value === item.value) {
-            console.log('option.selected', option.selected)
             option.selected === true
               ? handleDeselection(item)
               : (option.selected = true)
-            console.log('option.selected after', option.selected)
             return
           }
         })
-        console.log('selectRef.current', selectRef.current)
         selectRef.current.dispatchEvent(new Event('change', { bubbles: true }))
       }
       setFilterText('')

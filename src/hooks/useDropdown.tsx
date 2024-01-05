@@ -49,7 +49,7 @@ function useDropdown({
       setFilterText,
     })
 
-  const { asyncState } = useAsyncDropdown({
+  const { asyncState, handleAsyncSelect } = useAsyncDropdown({
     asyncFunction,
     filterText,
     minimumSearchQuery,
@@ -179,6 +179,16 @@ function useDropdown({
 
   let dropdownList: ReactNode
 
+  const handleAsyncClick = (item: IObjectItem) => {
+    handleAsyncSelect(item)
+    handleItemClick(item)
+  }
+
+  const handleAsyncMultiClick = (item: IObjectItem) => {
+    handleAsyncSelect(item)
+    handleSelection(item)
+  }
+
   if (asyncFunction) {
     dropdownList = (
       <DropdownList
@@ -187,7 +197,7 @@ function useDropdown({
         data={asyncState.data}
         emptySearchPhrase={emptySearchPhrase}
         noResultsPhrase={noResultsPhrase}
-        handleClick={handleItemClick}
+        handleClick={isMulti ? handleAsyncMultiClick : handleAsyncClick}
         dropdownClassnames={combinedClasses.dropdown}
         dropdownItemClassnames={combinedClasses.dropdownItem}
         loading={asyncState.loading}
@@ -221,7 +231,10 @@ function useDropdown({
       <DropdownList
         filterText={filterText}
         data={filteredItems}
-        handleClick={handleSelection}
+        handleClick={(item) => {
+          handleSelection(item)
+          asyncFunction && handleAsyncSelect(item)
+        }}
         dropdownClassnames={combinedClasses.dropdown}
         dropdownItemClassnames={combinedClasses.dropdownItem}
         highlightedIndex={highlightedIndex}

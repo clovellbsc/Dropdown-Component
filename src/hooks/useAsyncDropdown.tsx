@@ -1,5 +1,5 @@
 import debounce from '../helpers/debouncer'
-import { IAsyncState } from '../types/dropdown'
+import { IAsyncState, IObjectItem } from '../types/dropdown'
 import { useEffect, useState } from 'react'
 
 function useAsyncDropdown({
@@ -11,7 +11,16 @@ function useAsyncDropdown({
     loading: false,
     error: null,
     data: [],
+    selectedItems: [],
   })
+
+  const handleAsyncSelect = (item: IObjectItem) => {
+    setAsyncState((prev) => {
+      if (prev.selectedItems.some((prevItem) => prevItem.value === item.value))
+        return prev
+      return { ...prev, selectedItems: [...prev.selectedItems, item] }
+    })
+  }
 
   useEffect(() => {
     // create a debounced getDropdownData function
@@ -37,7 +46,7 @@ function useAsyncDropdown({
     }
   }, [filterText, asyncFunction, minimumSearchQuery])
 
-  return { asyncState }
+  return { asyncState, handleAsyncSelect }
 }
 
 export default useAsyncDropdown
