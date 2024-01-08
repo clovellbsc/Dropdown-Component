@@ -91,6 +91,16 @@ function useDropdown({
     setHighlightedIndex(index)
   }
 
+  const handleAsyncClick = (item: IObjectItem) => {
+    handleAsyncSelect(item)
+    handleItemClick(item)
+  }
+
+  const handleAsyncMultiClick = (item: IObjectItem) => {
+    handleAsyncSelect(item)
+    handleSelection(item)
+  }
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowDown') {
@@ -127,7 +137,10 @@ function useDropdown({
       const maxIndex = getMaxIndex()
       if (highlightedIndex >= 0 && highlightedIndex <= maxIndex) {
         const selectedItem = getSelectedItem()
-        handleSelect(selectedItem)
+        !isMulti && handleItemClick(selectedItem)
+        isMulti && handleSelect(selectedItem)
+        asyncFunction && handleAsyncSelect(selectedItem)
+
         setFilterText('')
       }
       setIsOpen(false)
@@ -178,16 +191,6 @@ function useDropdown({
   ])
 
   let dropdownList: ReactNode
-
-  const handleAsyncClick = (item: IObjectItem) => {
-    handleAsyncSelect(item)
-    handleItemClick(item)
-  }
-
-  const handleAsyncMultiClick = (item: IObjectItem) => {
-    handleAsyncSelect(item)
-    handleSelection(item)
-  }
 
   if (asyncFunction) {
     dropdownList = (
