@@ -1,7 +1,13 @@
 import { IObjectItem } from '../types/dropdown'
 
 function mergeArraysWithoutDuplicate(arr: IObjectItem[], key: string) {
-  return [...new Map(arr.map((item) => [item[key], item])).values()]
+  const uniqueArr: IObjectItem[] = []
+  arr.forEach((item) => {
+    if (!uniqueArr.includes(item[key])) {
+      uniqueArr.push(item[key])
+    }
+  })
+  return uniqueArr
 }
 
 export default mergeArraysWithoutDuplicate
