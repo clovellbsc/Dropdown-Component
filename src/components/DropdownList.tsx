@@ -54,7 +54,7 @@ export default function DropdownList({
         ? data.map((item: IObjectItem, index: number) => {
             return (
               <li
-                key={index}
+                key={`${item.value}-dropdown`}
                 onClick={() => {
                   handleClick(item)
                 }}

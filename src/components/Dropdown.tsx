@@ -102,7 +102,7 @@ export default function Dropdown({
             ? items?.map((item) => {
                 return (
                   <option
-                    key={item.value}
+                    key={`${item.value}-sr-only`}
                     value={item.value}
                     className="opacity-0"
                   >
@@ -116,7 +116,7 @@ export default function Dropdown({
               ).map((item) => {
                 return (
                   <option
-                    key={item.value}
+                    key={`${item.value}-sr-only`}
                     value={item.value}
                     className="opacity-0"
                   >
