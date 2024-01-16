@@ -60,13 +60,13 @@ function useDropdown({
   })
 
   const handleItemClick = useCallback((item: IObjectItem | null) => {
-    setFilterText('')
     if (selectRef.current) {
       selectRef.current.value = item?.value ? item?.value : ''
       selectRef.current.dispatchEvent(new Event('change', { bubbles: true }))
     }
     dropdownRef.current?.blur()
     inputRef.current?.blur()
+    setFilterText('')
   }, [])
 
   const handleRemoveSelected = () => {
