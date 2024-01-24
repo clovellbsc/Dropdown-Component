@@ -1,15 +1,6 @@
-import { IObjectItem } from '../types/dropdown'
+import { IDropdownItemProps } from '../types/dropdown'
 import React from 'react'
 import 'tailwindcss/tailwind.css'
-
-interface IDropdownItemProps {
-  item: IObjectItem
-  highlighted: boolean
-  selected: boolean
-  highlightColor: string
-  highlightTextColor: string
-  dropdownItemClassnames?: string
-}
 
 export default function Item({
   item,

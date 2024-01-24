@@ -1,15 +1,6 @@
-import { IObjectItem } from '../types/dropdown'
+import { IDropDownLabelItemProps } from '../types/dropdown'
 import { XIcon } from './icons'
 import React from 'react'
-
-interface IDropDownLabelItemProps {
-  handleRemoveSingle: (item: any) => void
-  item: IObjectItem
-  containerStyles: string
-  iconContainerStyles: string
-  iconStyles: string
-  iconColour: string
-}
 
 export default function DropdownLabelItem({
   handleRemoveSingle,

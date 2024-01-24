@@ -1,15 +1,7 @@
 import React from 'react'
 import 'tailwindcss/tailwind.css'
-import { IObjectItem, IStylingClassnames } from '../types/dropdown'
+import { IMultiDropdownToggleProps, IObjectItem } from '../types/dropdown'
 import DropdownLabelItem from './DropdownLabelItem'
-
-interface IProps {
-  label: string | IObjectItem[]
-  iconColour?: string
-  handleRemoveSingle: (item: IObjectItem) => void
-  stylingClassnames?: IStylingClassnames
-  searchable?: boolean
-}
 
 export default function MultiDropdownToggle({
   label,
@@ -17,7 +9,7 @@ export default function MultiDropdownToggle({
   handleRemoveSingle,
   stylingClassnames,
   searchable,
-}: IProps) {
+}: IMultiDropdownToggleProps) {
   return (
     <div className="p-1.5 flex justify-between items-center select-none bg-transparent w-fit">
       {Array.isArray(label) ? (

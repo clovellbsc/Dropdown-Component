@@ -1,24 +1,7 @@
-import { IObjectItem } from '../types/dropdown'
+import { IDropdownListProps, IObjectItem } from '../types/dropdown'
 import Item from './DropdownItem'
 import React from 'react'
 import 'tailwindcss/tailwind.css'
-
-interface IDropdownListProps {
-  filterText: string
-  minimumSearchQuery?: number
-  data: IObjectItem[]
-  emptySearchPhrase?: string
-  noResultsPhrase?: string
-  handleClick: (item: IObjectItem) => void
-  dropdownClassnames: string
-  loading?: boolean
-  highlightedIndex?: number
-  handleMouseOver: (index: number) => void
-  selected: IObjectItem | null | IObjectItem[]
-  highlightColor: string
-  highlightTextColor: string
-  dropdownItemClassnames?: string
-}
 
 export default function DropdownList({
   filterText,
