@@ -71,6 +71,9 @@ export default function Dropdown({
     ? value?.length > 0
       ? value
       : placeholder
+    : asyncFunction
+    ? asyncState.selectedItems.find((item) => item.value === value)?.label ??
+      placeholder
     : items?.find((item) => item.value === value)?.label ?? placeholder
 
   const iconClassnames =
