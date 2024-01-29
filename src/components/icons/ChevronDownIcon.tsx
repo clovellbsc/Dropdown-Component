@@ -13,13 +13,17 @@ const ChevronDownIcon = ({
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill={fill}
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke={fill}
       className={className}
       onClick={onClick}
     >
       <path
-        fillRule="evenodd"
-        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m19.5 8.25-7.5 7.5-7.5-7.5"
       />
     </svg>
   )
