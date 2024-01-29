@@ -1,6 +1,6 @@
 import debounce from '../helpers/debouncer'
 import { IAsyncState, IObjectItem } from '../types/dropdown'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function useAsyncDropdown({
   asyncFunction,
