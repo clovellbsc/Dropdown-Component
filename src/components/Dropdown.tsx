@@ -153,7 +153,9 @@ export default function Dropdown({
           name={name}
           value={
             asyncFunction
-              ? asyncValue?.map((value: IObjectItem) => value.value)
+              ? Array.isArray(asyncValue)
+                ? asyncValue?.map((value: IObjectItem) => value.value)
+                : asyncValue?.value
               : value
           }
           className="opacity-0 sr-only"
