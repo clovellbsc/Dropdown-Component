@@ -66,7 +66,9 @@ export interface IDropdownProps {
   stylingClassnames?: IStylingClassnames
 
   isMulti?: boolean
-  value: string | string[]
+  value?: string | string[]
+
+  asyncValue?: IObjectItem | IObjectItem[]
 }
 
 export interface IUseDropdownProps {
@@ -83,7 +85,8 @@ export interface IUseDropdownProps {
 
   isMulti?: boolean
   children?: ReactNode
-  value: string | string[]
+  value?: string | string[]
+  asyncValue?: IObjectItem | IObjectItem[]
 }
 
 export interface IDropdownItemProps {
@@ -138,6 +141,7 @@ export interface IMultiDropdownToggleProps {
   handleRemoveSingle: (item: IObjectItem) => void
   stylingClassnames?: IStylingClassnames
   searchable?: boolean
+  input: ReactNode
 }
 
 export interface IRequestParams {

@@ -23,6 +23,7 @@ function useDropdown({
   stylingClassnames,
   isMulti,
   value,
+  asyncValue,
 }: IUseDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleToggle = (e: any) => {
@@ -49,11 +50,13 @@ function useDropdown({
       setFilterText,
     })
 
-  const { asyncState, handleAsyncSelect } = useAsyncDropdown({
-    asyncFunction,
-    filterText,
-    minimumSearchQuery,
-  })
+  const { asyncState, handleAsyncSelect, handleAsyncRemoveSingle } =
+    useAsyncDropdown({
+      asyncFunction,
+      filterText,
+      minimumSearchQuery,
+      asyncValue,
+    })
 
   const { combinedClasses } = useStyling({
     stylingClassnames,
@@ -99,6 +102,11 @@ function useDropdown({
   const handleAsyncMultiClick = (item: IObjectItem) => {
     handleAsyncSelect(item)
     handleSelection(item)
+  }
+
+  const handleAsyncDeselection = (item: IObjectItem) => {
+    handleDeselection(item)
+    handleAsyncRemoveSingle(item)
   }
 
   useEffect(() => {
@@ -280,7 +288,9 @@ function useDropdown({
     classnames: combinedClasses,
     handleInputChange,
     dropdownList,
-    handleRemoveSingle: handleDeselection,
+    handleRemoveSingle: asyncFunction
+      ? handleAsyncDeselection
+      : handleDeselection,
   }
 }
 

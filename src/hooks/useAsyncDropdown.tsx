@@ -1,12 +1,18 @@
 import debounce from '../helpers/debouncer'
 import { IAsyncState, IObjectItem } from '../types/dropdown'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 function useAsyncDropdown({
   asyncFunction,
   filterText,
   minimumSearchQuery,
-}: any) {
+  asyncValue,
+}: {
+  asyncFunction: any
+  filterText: string
+  minimumSearchQuery: number
+  asyncValue: IObjectItem | IObjectItem[] | undefined
+}) {
   const [asyncState, setAsyncState] = useState<IAsyncState>({
     loading: false,
     error: null,
@@ -14,12 +20,36 @@ function useAsyncDropdown({
     selectedItems: [],
   })
 
+  useEffect(() => {
+    if (Array.isArray(asyncValue) && asyncValue.length > 0) {
+      setAsyncState((prev: IAsyncState) => ({
+        ...prev,
+        selectedItems: asyncValue,
+      }))
+    }
+    if (!Array.isArray(asyncValue) && asyncValue) {
+      setAsyncState((prev: IAsyncState) => ({
+        ...prev,
+        selectedItems: [asyncValue],
+      }))
+    }
+  }, [asyncValue])
+
   const handleAsyncSelect = (item: IObjectItem) => {
     setAsyncState((prev) => {
       if (prev.selectedItems.some((prevItem) => prevItem.value === item.value))
         return prev
       return { ...prev, selectedItems: [...prev.selectedItems, item] }
     })
+  }
+
+  const handleAsyncRemoveSingle = (item: IObjectItem) => {
+    setAsyncState((prev) => ({
+      ...prev,
+      selectedItems: prev.selectedItems.filter(
+        (prevItem) => prevItem.value !== item.value
+      ),
+    }))
   }
 
   useEffect(() => {
@@ -46,7 +76,7 @@ function useAsyncDropdown({
     }
   }, [filterText, asyncFunction, minimumSearchQuery])
 
-  return { asyncState, handleAsyncSelect }
+  return { asyncState, handleAsyncSelect, handleAsyncRemoveSingle }
 }
 
 export default useAsyncDropdown

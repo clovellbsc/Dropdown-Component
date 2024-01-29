@@ -1,4 +1,4 @@
-import { IHttpResponse, IRequestParams } from '@/types/dropdown'
+import { IHttpResponse, IRequestParams } from '../types/dropdown'
 
 export default async function http(
   reqOptions: IRequestParams

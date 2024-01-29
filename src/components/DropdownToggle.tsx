@@ -1,4 +1,4 @@
-import { IDropdownToggleProps } from '@/types/dropdown'
+import { IDropdownToggleProps } from '../types/dropdown'
 import React from 'react'
 import 'tailwindcss/tailwind.css'
 
