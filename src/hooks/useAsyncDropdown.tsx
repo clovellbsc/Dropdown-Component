@@ -21,7 +21,7 @@ function useAsyncDropdown({
   })
 
   useEffect(() => {
-    if (Array.isArray(asyncValue) && asyncValue.length > 0) {
+    if (Array.isArray(asyncValue)) {
       setAsyncState((prev: IAsyncState) => ({
         ...prev,
         selectedItems: asyncValue,
@@ -39,7 +39,10 @@ function useAsyncDropdown({
     setAsyncState((prev) => {
       if (prev.selectedItems.some((prevItem) => prevItem.value === item.value))
         return prev
-      return { ...prev, selectedItems: [...prev.selectedItems, item] }
+
+      const newState = { ...prev, selectedItems: [...prev.selectedItems, item] }
+
+      return newState
     })
   }
 

@@ -116,6 +116,15 @@ export default function Dropdown({
     return selectedLabel || placeholder
   }
 
+  const getSelectValue = () => {
+    if (!asyncFunction) return value
+
+    if (isMulti)
+      return asyncState.selectedItems.map((value: IObjectItem) => value.value)
+
+    return asyncState.selectedItems[0]?.value ?? ''
+  }
+
   const input = (
     <input
       id="dropdown-search"
@@ -151,13 +160,7 @@ export default function Dropdown({
           aria-hidden="true"
           id="shadow-select"
           name={name}
-          value={
-            asyncFunction
-              ? Array.isArray(asyncValue)
-                ? asyncValue?.map((value: IObjectItem) => value.value)
-                : asyncValue?.value
-              : value
-          }
+          value={getSelectValue()}
           className="opacity-0 sr-only"
           onChange={onChange}
           multiple={isMulti}
