@@ -24,6 +24,7 @@ function useDropdown({
   isMulti,
   value,
   asyncValue,
+  debounceTime,
 }: IUseDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleToggle = (e: any) => {
@@ -56,6 +57,7 @@ function useDropdown({
       filterText,
       minimumSearchQuery,
       asyncValue,
+      debounceTime,
     })
 
   const { combinedClasses } = useStyling({

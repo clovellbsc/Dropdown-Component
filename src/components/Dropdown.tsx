@@ -22,6 +22,7 @@ import mergeArraysAndRemoveDuplicates from '../helpers/mergeArraysWithoutDuplica
  * @param asyncValue - An array of objects {label: string, value: string} that is used to display the selected items in the dropdown - optional
  * @param clearable - A boolean that determines whether the dropdown can be cleared - optional - defaults to true
  * @param isMulti - A boolean that determines whether the dropdown is a multi select - optional - defaults to false
+ * @param debounceTime - A number that determines the time in milliseconds to debounce the asyncFunction - optional - defaults to 300
  * @returns The dropdown component
  */
 
@@ -41,6 +42,7 @@ export default function Dropdown({
   asyncValue,
   clearable = true,
   isMulti = false,
+  debounceTime = 300,
 }: IDropdownProps) {
   const {
     isOpen,
@@ -69,6 +71,7 @@ export default function Dropdown({
     isMulti,
     value,
     asyncValue,
+    debounceTime,
   })
 
   const label = Array.isArray(value)

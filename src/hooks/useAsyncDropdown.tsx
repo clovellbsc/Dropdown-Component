@@ -7,11 +7,13 @@ function useAsyncDropdown({
   filterText,
   minimumSearchQuery,
   asyncValue,
+  debounceTime,
 }: {
   asyncFunction: any
   filterText: string
   minimumSearchQuery: number
   asyncValue: IObjectItem | IObjectItem[] | undefined
+  debounceTime: number
 }) {
   const [asyncState, setAsyncState] = useState<IAsyncState>({
     loading: false,
@@ -66,7 +68,7 @@ function useAsyncDropdown({
         error,
         data: data ?? [],
       }))
-    }, 250) // set a delay time in milliseconds
+    }, debounceTime) // set a delay time in milliseconds
 
     // If an async function has been passed to the dropdown and if the filterText is greater than the minimumSearchQuery, then set the loading state to true and call the debouncedGetDropdownData function
     if (asyncFunction && filterText.length >= minimumSearchQuery) {

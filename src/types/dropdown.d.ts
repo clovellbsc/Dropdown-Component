@@ -69,6 +69,8 @@ export interface IDropdownProps {
   value?: string | string[]
 
   asyncValue?: IObjectItem | IObjectItem[]
+
+  debounceTime?: number
 }
 
 export interface IUseDropdownProps {
@@ -87,6 +89,7 @@ export interface IUseDropdownProps {
   children?: ReactNode
   value?: string | string[]
   asyncValue?: IObjectItem | IObjectItem[]
+  debounceTime: number
 }
 
 export interface IDropdownItemProps {
