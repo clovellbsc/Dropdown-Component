@@ -51,14 +51,18 @@ function useDropdown({
       setFilterText,
     })
 
-  const { asyncState, handleAsyncSelect, handleAsyncRemoveSingle } =
-    useAsyncDropdown({
-      asyncFunction,
-      filterText,
-      minimumSearchQuery,
-      asyncValue,
-      debounceTime,
-    })
+  const {
+    asyncState,
+    handleAsyncSelect,
+    handleAsyncRemoveSingle,
+    memoisedDebouncedFetch,
+  } = useAsyncDropdown({
+    asyncFunction,
+    filterText,
+    minimumSearchQuery,
+    asyncValue,
+    debounceTime,
+  })
 
   const { combinedClasses } = useStyling({
     stylingClassnames,
@@ -78,18 +82,18 @@ function useDropdown({
     handleItemClick(null)
   }
 
-  useEffect(() => {
-    items && filterText.length > 0
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterText(e.target.value)
+    items && e.target.value.length > 0
       ? setFilteredItems(
           items?.filter((item: IObjectItem) => {
             return item.label.toLowerCase().includes(filterText.toLowerCase())
           })
         )
       : items && setFilteredItems(items)
-  }, [items, filterText])
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterText(e.target.value)
+    if (asyncFunction && e.target.value.length >= minimumSearchQuery) {
+      memoisedDebouncedFetch(e.target.value)
+    }
   }
 
   const handleMouseOver = (index: number) => {

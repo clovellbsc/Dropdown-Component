@@ -1,11 +1,9 @@
 import debounce from '../helpers/debouncer'
 import { IAsyncState, IObjectItem } from '../types/dropdown'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 function useAsyncDropdown({
   asyncFunction,
-  filterText,
-  minimumSearchQuery,
   asyncValue,
   debounceTime,
 }: {
@@ -57,31 +55,49 @@ function useAsyncDropdown({
     }))
   }
 
-  useEffect(() => {
-    // create a debounced getDropdownData function
-    const debouncedGetDropdownData = debounce(async () => {
-      const { data, error } = await asyncFunction(filterText)
+  const setLoading = (loading: boolean) => {
+    setAsyncState((prev: IAsyncState) => ({
+      ...prev,
+      loading,
+    }))
+  }
 
-      setAsyncState((prev: IAsyncState) => ({
-        ...prev,
-        loading: false,
-        error,
-        data: data ?? [],
-      }))
-    }, debounceTime) // set a delay time in milliseconds
+  const setAsyncData = (data: IObjectItem[]) => {
+    setAsyncState((prev: IAsyncState) => ({
+      ...prev,
+      data,
+    }))
+  }
 
-    // If an async function has been passed to the dropdown and if the filterText is greater than the minimumSearchQuery, then set the loading state to true and call the debouncedGetDropdownData function
-    if (asyncFunction && filterText.length >= minimumSearchQuery) {
-      setAsyncState((prev: IAsyncState) => ({
-        ...prev,
-        loading: true,
-      }))
+  // create a debounced getDropdownData function
+  const handleFetch = useCallback(
+    async (query: string) => {
+      setLoading(true)
+      const { data, error } = await asyncFunction(query)
 
-      debouncedGetDropdownData()
-    }
-  }, [filterText, asyncFunction, minimumSearchQuery])
+      if (error) {
+        console.error('error', error)
+      }
+      if (data) {
+        setAsyncData(data)
+      }
 
-  return { asyncState, handleAsyncSelect, handleAsyncRemoveSingle }
+      setLoading(false)
+    },
+    [asyncFunction]
+  )
+
+  const memoisedDebouncedFetch = useMemo(
+    () => debounce(handleFetch, debounceTime),
+    [handleFetch, debounceTime]
+  )
+
+  return {
+    asyncState,
+    handleAsyncSelect,
+    handleAsyncRemoveSingle,
+    memoisedDebouncedFetch,
+  }
 }
 
 export default useAsyncDropdown
