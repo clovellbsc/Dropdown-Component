@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 export interface IObjectItem {
   icon?: {
@@ -46,7 +46,7 @@ export interface IStylingClassnames {
   }
 }
 
-export interface IDropdownProps {
+export interface IDropdownProps extends React.HTMLProps<HTMLSelectElement> {
   placeholder: string
   items?: IObjectItem[]
   onChange: ObjectClickHandler

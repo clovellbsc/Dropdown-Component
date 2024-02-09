@@ -43,6 +43,7 @@ export default function Dropdown({
   clearable = true,
   isMulti = false,
   debounceTime = 300,
+  ...selectProps
 }: IDropdownProps) {
   const {
     isOpen,
@@ -167,6 +168,7 @@ export default function Dropdown({
           className="opacity-0 sr-only"
           onChange={onChange}
           multiple={isMulti}
+          {...selectProps}
         >
           {items
             ? items?.map((item) => {
