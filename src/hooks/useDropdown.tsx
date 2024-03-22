@@ -25,6 +25,7 @@ function useDropdown({
   value,
   asyncValue,
   debounceTime,
+  disabled,
 }: IUseDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const handleToggle = (e: any) => {
@@ -42,6 +43,36 @@ function useDropdown({
   const dropdownRef = useRef<HTMLInputElement>(null)
   useClickOutside(dropdownRef, () => setIsOpen(false))
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0)
+
+  useEffect(() => {
+    setFilteredItems(items || [])
+  }, [items])
+
+  useEffect(() => {
+    const disableElements = (element: HTMLElement) => {
+      // Remove hover styles
+      element.style.pointerEvents = disabled ? 'none' : ''
+
+      // Disable form controls
+      if (
+        element instanceof HTMLInputElement ||
+        element instanceof HTMLButtonElement ||
+        element instanceof HTMLSelectElement
+      ) {
+        element.disabled = !!disabled
+      }
+
+      // Recursively disable children
+      Array.from(element.children).forEach((child) => {
+        disableElements(child as HTMLElement)
+      })
+    }
+
+    // Start disabling from the container
+    if (dropdownRef.current) {
+      disableElements(dropdownRef.current)
+    }
+  }, [disabled])
 
   const { handleSelection, handleDeselection, handleRemoveAllSelected } =
     useMultiDropdown({

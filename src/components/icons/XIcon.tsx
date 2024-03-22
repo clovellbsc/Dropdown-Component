@@ -7,7 +7,7 @@ const XIcon = ({
   onClick,
 }: {
   fill: string
-  className: string
+  className?: string
   onClick?: () => void
 }) => {
   return (

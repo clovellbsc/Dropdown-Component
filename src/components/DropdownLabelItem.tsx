@@ -11,16 +11,16 @@ export default function DropdownLabelItem({
   iconColour,
 }: IDropDownLabelItemProps) {
   return (
-    <div
+    <button
       className={containerStyles}
       onClick={() => {
         handleRemoveSingle && handleRemoveSingle(item)
       }}
     >
       <p>{item.label}</p>
-      <div className={iconContainerStyles}>
+      <div className={`${iconContainerStyles}`}>
         <XIcon className={iconStyles} fill={iconColour} />
       </div>
-    </div>
+    </button>
   )
 }

@@ -73,6 +73,7 @@ export default function Dropdown({
     value,
     asyncValue,
     debounceTime,
+    disabled: selectProps.disabled,
   })
 
   const label = Array.isArray(value)
@@ -149,7 +150,9 @@ export default function Dropdown({
 
   return (
     <div
-      className={`w-full text-black relative`}
+      className={`w-full text-black relative ${
+        selectProps.disabled ? 'opacity-50' : ''
+      }`}
       ref={dropdownRef}
       role="listbox"
       aria-label={placeholder}
@@ -219,30 +222,33 @@ export default function Dropdown({
         {searchable && !isMulti && <div className="w-full">{input}</div>}
         <div className="flex h-full ml-auto">
           {label !== placeholder && clearable && (
-            <XIcon
-              fill={classnames?.iconColour ?? '#000'}
-              className={iconClassnames}
-              onClick={() => {
-                handleRemoveSelected && handleRemoveSelected()
-                setFilterText('')
-              }}
-            />
+            <button className={iconClassnames}>
+              <XIcon
+                fill={classnames?.iconColour ?? '#000'}
+                onClick={() => {
+                  handleRemoveSelected && handleRemoveSelected()
+                  setFilterText('')
+                }}
+              />
+            </button>
           )}
-          {isOpen ? (
-            <ChevronUpIcon
-              fill={classnames?.iconColour ?? '#000'}
-              className={iconClassnames + 'rotate'}
-              onClick={handleToggle}
-            />
+          {!isOpen ? (
+            <button className={iconClassnames + 'rotate'}>
+              <ChevronDownIcon
+                fill={classnames?.iconColour ?? '#000'}
+                onClick={handleToggle}
+              />
+            </button>
           ) : (
-            <ChevronDownIcon
-              fill={classnames?.iconColour ?? '#000'}
-              className={iconClassnames + 'rotate-back'}
-              onClick={handleToggle}
-            />
+            <button className={iconClassnames + 'rotate'}>
+              <ChevronUpIcon
+                fill={classnames?.iconColour ?? '#000'}
+                onClick={handleToggle}
+              />
+            </button>
           )}
         </div>
-        {isOpen && dropdownList}
+        {isOpen && !selectProps.disabled && dropdownList}
       </div>
     </div>
   )

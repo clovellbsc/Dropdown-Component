@@ -20,9 +20,9 @@ function useStyling({
     highlightTextColor: 'text-white',
     multi: {
       multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`,
-      selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`,
+      selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm cursor-pointer`,
       selectedItemIconBox: 'bg-transparent w-fit h-fit',
-      selectedItemIcon: 'w-4 h-4 cursor-pointer',
+      selectedItemIcon: 'w-4 h-4',
     },
   }
 

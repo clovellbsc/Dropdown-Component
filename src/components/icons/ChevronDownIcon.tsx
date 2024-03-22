@@ -7,7 +7,7 @@ const ChevronDownIcon = ({
   onClick,
 }: {
   fill: string
-  className: string
+  className?: string
   onClick?: (e: any) => void
 }) => {
   return (

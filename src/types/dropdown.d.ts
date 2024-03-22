@@ -90,6 +90,8 @@ export interface IUseDropdownProps {
   value?: string | string[]
   asyncValue?: IObjectItem | IObjectItem[]
   debounceTime: number
+
+  disabled?: boolean
 }
 
 export interface IDropdownItemProps {
