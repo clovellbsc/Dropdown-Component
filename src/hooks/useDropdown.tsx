@@ -100,7 +100,9 @@ function useDropdown({
   })
 
   const handleItemClick = useCallback((item: IObjectItem | null) => {
+    console.log('item in handle Item click', item)
     if (selectRef.current) {
+      console.log('selectRef.current', selectRef.current)
       selectRef.current.value = item?.value ? item?.value : ''
       selectRef.current.dispatchEvent(new Event('change', { bubbles: true }))
     }
@@ -118,7 +120,9 @@ function useDropdown({
     items && e.target.value.length > 0
       ? setFilteredItems(
           items?.filter((item: IObjectItem) => {
-            return item.label.toLowerCase().includes(filterText.toLowerCase())
+            return item.label
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())
           })
         )
       : items && setFilteredItems(items)
