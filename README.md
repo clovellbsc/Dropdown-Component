@@ -279,7 +279,7 @@ You may also pass the emptySearchPhrase and the noResultsPhrase.
 
 
 ## Styling
-To style the dropdown component you can pass through the stylingClassnames prop: 
+To style the dropdown component you can pass through the stylingClassnames prop. Examples for each option are listed below (The styles are ugly but to make it obvious what is being styled): 
 
 ```
     <Dropdown
@@ -303,17 +303,21 @@ The way that the styling classnames works, is that it starts with the following 
 ```
   const defaultClasses = {
     container: `flex w-full text-left bg-white rounded cursor-pointer max-w-screen border border-gray-400 relative py-1 h-fit items-center`,
-    input: `flex h-full px-5 py-2 text-sm bg-white outline-none max-w-[100%] flex-1`,
+    input: `flex h-full px-5 py-2 text-sm bg-white outline-none w-full flex-1`,
     dropdown:
       'absolute bottom-0 left-0 z-[1] w-full translate-y-full h-fit bg-white',
+    dropdownItem:
+      'focus:outline-none flex gap-2.5 cursor-pointer w-full h-full text-sm pl-5 py-1 items-center',
     iconColour: 'black',
     rounded: 'rounded',
     shadow: 'shadow-md',
+    highlightColor: 'bg-[#0000FF]',
+    highlightTextColor: 'text-white',
     multi: {
       multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`,
-      selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`,
+      selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm cursor-pointer`,
       selectedItemIconBox: 'bg-transparent w-fit h-fit',
-      selectedItemIcon: 'w-4 h-4 cursor-pointer',
+      selectedItemIcon: 'w-4 h-4',
     },
   }
   ```
@@ -321,41 +325,118 @@ The way that the styling classnames works, is that it starts with the following 
 You can make additions or changes to the above styling without removing all of the classnames, this is done by utilising tailwind-merge. This therefore takes any tailwind classes that you pass to the styling classnames and overwrites any conflicting classnames on the dropdown, therefore you don't have to write all styling from scratch, if you only want to make one change.
 
 #### Container
+<img width="100%" alt="Screenshot 2024-03-27 at 12 02 07" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/c21953b5-11d2-44b2-a45d-ff3dde329af9">
+
 This is the overall container of the dropdown, which has the following default classnames
 
 ```
 container: 'flex w-full text-left bg-white rounded cursor-pointer max-w-screen border border-gray-400 relative py-1 h-fit items-center'
 ```
 
+An example implementation of the container styling would be the following: 
+
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  onChange={(e) => setSelectedItem(e.target.value)}
+  stylingClassnames={{
+    container: 'border-2 border-white-500 rounded-full pr-2',
+  }}
+/>
+```
+
+
 #### Input
-This is the styling for the input, which is what is used for searchable dropdowns
+<img width="100%" alt="Screenshot 2024-03-27 at 12 12 52" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/d8730722-b529-4d55-83c4-1ab3d676b3b9">
+
+This is the styling for the input, which is used for searchable dropdowns
 
 ```
 input: 'flex h-full px-5 py-2 text-sm bg-white outline-none max-w-[100%] flex-1'
 ```
 
+An example implementation of the input styling would be the following: 
+
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  onChange={(e) => setSelectedItem(e.target.value)}
+  searchable
+  stylingClassnames={{
+    input: 'border-2 border-gray-500',
+  }}
+/>
+```
+
+
 #### Dropdown
+<img width="100%" alt="Screenshot 2024-03-27 at 12 21 09" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/4f22e795-4e9b-4fe9-a94b-0b9fa49c6e08">
+
 This is the styling for the container of the dropdown list
 
 ```
 dropdown: 'absolute bottom-0 left-0 z-[1] w-full translate-y-full h-fit bg-white'
 ```
 
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  onChange={(e) => setSelectedItem(e.target.value)}
+  searchable
+  stylingClassnames={{
+    dropdown: 'border-2 border-gray-500',
+  }}
+/>
+```
+
+
 #### Icon Colour
+<img width="100%" alt="Screenshot 2024-03-27 at 12 23 46" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/d68ecbfb-7e00-4cee-83db-28a16a70ae72">
+
 As the name suggests, this is the colour of the icons, the chevrons and the X. 
 
 ```
-iconColour: 'black'
+iconColour: 'red'
 ```
 
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  onChange={(e) => setSelectedItem(e.target.value)}
+  searchable
+  stylingClassnames={{
+    iconColour: 'red'
+  }}
+/>
+```
 #### Rounded
+<img width="100%" alt="Screenshot 2024-03-27 at 12 28 02" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/56f70a96-1230-4671-befd-8b5226faf044">
+
 This class is used to provide a border radius to the dropdown and container, should you wish them to be the same and not individually style them
 
 ```
 rounded: 'rounded'
 ```
 
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  onChange={(e) => setSelectedItem(e.target.value)}
+  searchable
+  stylingClassnames={{
+    rounded: 'rounded-lg'
+  }}
+/>
+```
+
+
 ### Multi
+
 Multi is a group of styles for styling the multi specific styles, for example the selected items.
 
 ```
@@ -368,30 +449,99 @@ Multi is a group of styles for styling the multi specific styles, for example th
 ```
 
 #### Multi Label Container
+<img width="100%" alt="Screenshot 2024-03-27 at 12 41 23" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/c5f09e5e-8b3a-490e-b08f-5a337dee48a7">
+
 This is used to style the container of all the selected items, should you wish you could make it absolute to display the items above the dropdown should you wish
 
 ```
 multiLabelContainer: `flex flex-wrap gap-y-1.5 gap-x-2 relative left-0 w-full`
 ```
 
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  isMulti
+  onChange={handleChange}
+  value={selectedItems}
+  stylingClassnames={{
+    multi: {
+      multiLabelContainer: 'flex flex-col gap-4 border-2 border-gray-500 p-2',
+    },
+  }}
+/>
+```
+
+
 #### Selected Item Container
+<img width="100%" alt="Screenshot 2024-03-27 at 14 04 46" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/44b4cf28-13fb-4315-8ff3-1b83c8bba7f4">
+
 This is the container for each individual selected item.
 
 ```
 selectedItemContainer: `flex items-center relative gap-x-2 justify-center max-w-[100%] z-[2] px-2 py-1 mr-2 text-black bg-gray-100 rounded-md shadow-md hover:text-[#F00] group hover:bg-gray-200 transition-all duration-300 text-sm`
 ```
 
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  isMulti
+  onChange={handleChange}
+  value={selectedItems}
+  stylingClassnames={{
+    multi: {
+      selectedItemContainer: 'bg-blue-500 text-white',
+    },
+  }}
+/>
+```
+
 #### Selected Item Icon Box
+<img width="100%" alt="Screenshot 2024-03-27 at 14 11 39" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/345d963f-dda1-4cf4-8f6f-c54554c1b147">
+
 This is for styling the container of the icon, this is incase you do not wish for the icon to be inline in the selected item container but if you wanted to make it absolutely positioned top right of the selected item box for example
 
 ```
 selectedItemIconBox: 'bg-transparent w-fit h-fit'
 ```
 
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  isMulti
+  onChange={handleChange}
+  value={selectedItems}
+  stylingClassnames={{
+    multi: {
+      selectedItemIconBox: 'absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-gray-300 rounded-md',
+    },
+  }}
+/>
+```
+
 #### Selected Item Icon
+<img width="100%" alt="Screenshot 2024-03-27 at 14 15 12" src="https://github.com/clovellbsc/Dropdown-Component/assets/93338557/99409321-d83a-4152-a054-df6788b269a6">
+
 This is for styling the actual X Icon, if you want to change it's size etc.
 
 ```
 selectedItemIcon: 'w-4 h-4 cursor-pointer'
+```
+
+```
+<Dropdown
+  placeholder="Select an item"
+  items={items}
+  isMulti
+  onChange={handleChange}
+  value={selectedItems}
+  stylingClassnames={{
+    multi: {
+      selectedItemIcon: 'w-4 h-4 stroke-red-500 stroke-2',
+    },
+  }}
+/>
 ```
 
