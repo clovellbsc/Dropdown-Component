@@ -109,6 +109,7 @@ function useDropdown({
     dropdownRef.current?.blur()
     inputRef.current?.blur()
     setFilterText('')
+    setFilteredItems(items || [])
   }, [])
 
   const handleRemoveSelected = () => {
@@ -121,8 +122,8 @@ function useDropdown({
       ? setFilteredItems(
           items?.filter((item: IObjectItem) => {
             return item.label
-              .toLowerCase()
-              .includes(e.target.value.toLowerCase())
+              ?.toLowerCase()
+              .includes(e.target.value?.toLowerCase())
           })
         )
       : items && setFilteredItems(items)
@@ -138,6 +139,8 @@ function useDropdown({
   const handleAsyncClick = (item: IObjectItem) => {
     handleAsyncSelect(item)
     handleItemClick(item)
+    setFilterText('')
+    setFilteredItems(items || [])
   }
 
   const handleAsyncMultiClick = (item: IObjectItem) => {
@@ -191,6 +194,7 @@ function useDropdown({
         asyncFunction && handleAsyncSelect(selectedItem)
 
         setFilterText('')
+        setFilteredItems(items || [])
       }
       setIsOpen(false)
     }
@@ -198,6 +202,8 @@ function useDropdown({
     const handleSelect = (item: IObjectItem) => {
       isMulti ? handleSelection(item) : handleItemClick(item)
       setIsOpen(false)
+      setFilterText('')
+      setFilteredItems(items || [])
     }
 
     const getMaxIndex = () => {

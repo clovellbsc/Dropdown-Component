@@ -13,7 +13,7 @@ export default function MultiDropdownToggle({
 }: IMultiDropdownToggleProps) {
   if (typeof label === 'string')
     return searchable ? <div className="w-full">{input}</div> : <p>{label}</p>
-  const labelArray: ReactNode[] = label.map(
+  const labelArray: ReactNode[] = label?.map(
     (item: IObjectItem, index: number) => (
       <DropdownLabelItem
         key={index}
