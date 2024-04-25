@@ -29,7 +29,7 @@ import mergeArraysAndRemoveDuplicates from '../helpers/mergeArraysWithoutDuplica
 export default function Dropdown({
   items,
   value,
-  placeholder,
+  placeholder = 'Select an item',
   name,
   onChange,
   searchable = false,
