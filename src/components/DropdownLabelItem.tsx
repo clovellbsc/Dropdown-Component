@@ -13,6 +13,7 @@ export default function DropdownLabelItem({
   return (
     <button
       className={containerStyles}
+      type="button"
       onClick={() => {
         handleRemoveSingle && handleRemoveSingle(item)
       }}

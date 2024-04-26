@@ -222,7 +222,7 @@ export default function Dropdown({
         {searchable && !isMulti && <div className="w-full">{input}</div>}
         <div className="flex h-full ml-auto">
           {label !== placeholder && clearable && (
-            <button className={iconClassnames}>
+            <button className={iconClassnames} type="button">
               <XIcon
                 fill={classnames?.iconColour ?? '#000'}
                 onClick={() => {
@@ -233,14 +233,14 @@ export default function Dropdown({
             </button>
           )}
           {!isOpen ? (
-            <button className={iconClassnames + 'rotate'}>
+            <button className={iconClassnames + 'rotate'} type="button">
               <ChevronDownIcon
                 fill={classnames?.iconColour ?? '#000'}
                 onClick={handleToggle}
               />
             </button>
           ) : (
-            <button className={iconClassnames + 'rotate'}>
+            <button className={iconClassnames + 'rotate'} type="button">
               <ChevronUpIcon
                 fill={classnames?.iconColour ?? '#000'}
                 onClick={handleToggle}
