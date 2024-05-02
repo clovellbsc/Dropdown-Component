@@ -11,6 +11,7 @@ For a basic dropdown you can use a similar set up to the dropdown below:
   items={items}
   placeholder="Select an item"
   onChange={(e) => setSelectedItem(e.target.value)}
+  value={selectedItem}
 />
 ```
 
