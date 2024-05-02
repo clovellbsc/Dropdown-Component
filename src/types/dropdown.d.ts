@@ -66,7 +66,7 @@ export interface IDropdownProps extends React.HTMLProps<HTMLSelectElement> {
   stylingClassnames?: IStylingClassnames
 
   isMulti?: boolean
-  value?: string | string[]
+  value?: string | string[] | undefined
 
   asyncValue?: IObjectItem | IObjectItem[]
 

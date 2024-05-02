@@ -289,6 +289,8 @@ function useDropdown({
         data={filteredItems}
         handleClick={(item) => {
           handleSelection(item)
+          setFilterText('')
+          setFilteredItems(items || [])
           asyncFunction && handleAsyncSelect(item)
         }}
         dropdownClassnames={combinedClasses.dropdown}
