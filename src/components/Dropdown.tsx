@@ -211,7 +211,7 @@ export default function Dropdown({
           />
         ) : (
           !searchable && (
-            <div className="p-1.5 flex justify-between items-center select-none bg-transparent w-full">
+            <div className={classnames.input}>
               <p>
                 {items?.find((item) => item.value === value)?.label ??
                   placeholder}
