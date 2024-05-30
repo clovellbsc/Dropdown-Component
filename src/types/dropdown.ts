@@ -47,7 +47,7 @@ export interface IStylingClassnames {
 }
 
 export interface IDropdownProps extends React.HTMLProps<HTMLSelectElement> {
-  placeholder: string
+  placeholder?: string
   items?: IObjectItem[]
   onChange: ObjectClickHandler
   searchable?: boolean
