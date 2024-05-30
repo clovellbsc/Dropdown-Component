@@ -76,14 +76,27 @@ export default function Dropdown({
     disabled: selectProps.disabled,
   })
 
-  const label = Array.isArray(value)
-    ? value?.length > 0
-      ? value
-      : placeholder
-    : asyncFunction
-    ? asyncState.selectedItems.find((item) => item.value === value)?.label ??
-      placeholder
-    : items?.find((item) => item.value === value)?.label ?? placeholder
+  const calculateLabel = () => {
+    if (Array.isArray(value) || Array.isArray(asyncValue)) {
+      return calculateMultiLabel()
+    }
+
+    const selectedAsyncItem = asyncState.selectedItems.find(
+      (item) => item.value === asyncValue?.value
+    )
+
+    if (asyncFunction && selectedAsyncItem) {
+      return selectedAsyncItem?.label
+    }
+
+    const selectedItem = items?.find((item) => item.value === value)
+
+    if (items && selectedItem) {
+      return selectedItem?.label
+    }
+
+    return placeholder
+  }
 
   const calculateMultiLabel = () => {
     if (
@@ -221,7 +234,7 @@ export default function Dropdown({
         )}
         {searchable && !isMulti && <div className="w-full">{input}</div>}
         <div className="flex h-full ml-auto">
-          {label !== placeholder && clearable && (
+          {calculateLabel() !== placeholder && clearable && (
             <button className={iconClassnames} type="button">
               <XIcon
                 fill={classnames?.iconColour ?? '#000'}
