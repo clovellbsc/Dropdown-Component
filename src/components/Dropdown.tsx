@@ -1,5 +1,5 @@
 import { IDropdownProps, IObjectItem } from '../types/dropdown'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import useDropdown from '../hooks/useDropdown'
 import MultiDropdownToggle from './MultiDropdownToggle'
 import { ChevronDownIcon, ChevronUpIcon, XIcon } from './icons'
@@ -43,6 +43,7 @@ export default function Dropdown({
   clearable = true,
   isMulti = false,
   debounceTime = 300,
+  disabled = false,
   ...selectProps
 }: IDropdownProps) {
   const {
@@ -73,7 +74,7 @@ export default function Dropdown({
     value,
     asyncValue,
     debounceTime,
-    disabled: selectProps.disabled,
+    disabled: disabled,
   })
 
   const calculateLabel = () => {
@@ -143,29 +144,9 @@ export default function Dropdown({
     return asyncState.selectedItems[0]?.value ?? ''
   }
 
-  const input = (
-    <input
-      id="dropdown-search"
-      onFocus={() => setIsOpen(true)}
-      onBlur={() => setIsOpen(false)}
-      className={`${classnames.input} ${classnames.rounded}`}
-      type="search"
-      placeholder={getLabelFromValue()}
-      value={filterText}
-      onChange={handleInputChange}
-      onClick={(e) => e.stopPropagation()}
-      ref={inputRef}
-      autoComplete="off"
-      tabIndex={searchable ? 0 : undefined}
-      key={'input-key'}
-    />
-  )
-
   return (
     <div
-      className={`w-full text-black relative ${
-        selectProps.disabled ? 'opacity-50' : ''
-      }`}
+      className={`w-full text-black relative ${disabled ? 'opacity-50' : ''}`}
       ref={dropdownRef}
       role="listbox"
       aria-label={placeholder}
@@ -213,26 +194,41 @@ export default function Dropdown({
                 )
               })}
         </select>
-        {isMulti && (Array.isArray(asyncValue) || Array.isArray(value)) ? (
+        {isMulti && (Array.isArray(asyncValue) || Array.isArray(value)) && (
           <MultiDropdownToggle
             label={calculateMultiLabel()}
             iconColour={classnames.iconColour}
             handleRemoveSingle={handleRemoveSingle}
             stylingClassnames={classnames}
             searchable={searchable}
-            input={input}
+            input={
+              <SearchableInput
+                setIsOpen={setIsOpen}
+                filterText={filterText}
+                handleInputChange={handleInputChange}
+                getLabelFromValue={getLabelFromValue}
+                inputRef={inputRef}
+                searchable={searchable}
+                classnames={classnames}
+                disabled={disabled}
+              />
+            }
           />
-        ) : (
-          !searchable && (
-            <div className={classnames.input}>
-              <p>
-                {items?.find((item) => item.value === value)?.label ??
-                  placeholder}
-              </p>
-            </div>
-          )
         )}
-        {searchable && !isMulti && <div className="w-full">{input}</div>}
+        {!isMulti && (
+          <div className="w-full">
+            <SearchableInput
+              setIsOpen={setIsOpen}
+              filterText={filterText}
+              handleInputChange={handleInputChange}
+              getLabelFromValue={getLabelFromValue}
+              inputRef={inputRef}
+              searchable={searchable}
+              classnames={classnames}
+              disabled={disabled}
+            />
+          </div>
+        )}
         <div className="flex h-full ml-auto">
           {calculateLabel() !== placeholder && clearable && (
             <button className={iconClassnames} type="button">
@@ -261,8 +257,60 @@ export default function Dropdown({
             </button>
           )}
         </div>
-        {isOpen && !selectProps.disabled && dropdownList}
+        {isOpen && !disabled && dropdownList}
       </div>
     </div>
   )
 }
+
+const SearchableInput = forwardRef(
+  (
+    {
+      setIsOpen,
+      filterText,
+      handleInputChange,
+      getLabelFromValue,
+      searchable,
+      classnames,
+      disabled,
+    }: {
+      setIsOpen: (value: boolean) => void
+      filterText: string
+      handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+      getLabelFromValue: () => string
+      inputRef: React.RefObject<HTMLInputElement>
+      searchable: boolean
+      classnames: { input: string; rounded: string }
+      disabled: boolean
+    },
+    inputRef: React.ForwardedRef<HTMLInputElement>
+  ) => {
+    const [isDisabled, setIsDisabled] = React.useState(false)
+
+    React.useEffect(() => {
+      const isDisabled = disabled || !searchable
+      setIsDisabled(isDisabled)
+    }, [disabled, searchable])
+
+    return (
+      <input
+        id="dropdown-search"
+        onFocus={() => setIsOpen(true)}
+        onBlur={() => setIsOpen(false)}
+        className={`${classnames.input} ${classnames.rounded} ${
+          disabled ? '' : 'cursor-pointer'
+        } ${searchable ? 'cursor-text' : ''}`}
+        type="search"
+        placeholder={getLabelFromValue()}
+        value={filterText}
+        onChange={handleInputChange}
+        onClick={(e) => e.stopPropagation()}
+        ref={inputRef}
+        autoComplete="off"
+        tabIndex={searchable ? 0 : undefined}
+        key={'input-key'}
+        disabled={isDisabled}
+      />
+    )
+  }
+)
