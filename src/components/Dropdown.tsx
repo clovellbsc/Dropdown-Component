@@ -121,18 +121,18 @@ export default function Dropdown({
 
   const getLabelFromValue = () => {
     if (Array.isArray(value) || Array.isArray(asyncValue)) {
-      return placeholder
+      return ''
     }
 
     if (asyncFunction) {
       const selectedItem = asyncState.selectedItems.find(
         (item) => JSON.stringify(item) === JSON.stringify(asyncValue)
       )
-      return selectedItem?.label ?? placeholder
+      return selectedItem?.label || ''
     }
 
     const selectedLabel = items?.find((item) => item?.value === value)?.label
-    return selectedLabel || placeholder
+    return selectedLabel || ''
   }
 
   const getSelectValue = () => {
@@ -211,6 +211,7 @@ export default function Dropdown({
                 searchable={searchable}
                 classnames={classnames}
                 disabled={disabled}
+                placeholder={placeholder}
               />
             }
           />
@@ -226,6 +227,7 @@ export default function Dropdown({
               searchable={searchable}
               classnames={classnames}
               disabled={disabled}
+              placeholder={placeholder}
             />
           </div>
         )}
@@ -273,24 +275,31 @@ const SearchableInput = forwardRef(
       searchable,
       classnames,
       disabled,
+      placeholder,
     }: {
       setIsOpen: (value: boolean) => void
       filterText: string
       handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-      getLabelFromValue: () => string
+      getLabelFromValue: () => string | undefined
       inputRef: React.RefObject<HTMLInputElement>
       searchable: boolean
       classnames: { input: string; rounded: string }
       disabled: boolean
+      placeholder: string
     },
     inputRef: React.ForwardedRef<HTMLInputElement>
   ) => {
     const [isDisabled, setIsDisabled] = React.useState(false)
+    const [value, setValue] = React.useState<string | undefined>(undefined)
 
     React.useEffect(() => {
       const isDisabled = disabled || !searchable
       setIsDisabled(isDisabled)
     }, [disabled, searchable])
+
+    React.useEffect(() => {
+      setValue(filterText ? filterText : getLabelFromValue())
+    }, [filterText, getLabelFromValue])
 
     return (
       <input
@@ -301,8 +310,8 @@ const SearchableInput = forwardRef(
           disabled ? '' : 'cursor-pointer'
         } ${searchable ? 'cursor-text' : ''}`}
         type="search"
-        placeholder={getLabelFromValue()}
-        value={filterText}
+        placeholder={placeholder}
+        value={value}
         onChange={handleInputChange}
         onClick={(e) => e.stopPropagation()}
         ref={inputRef}
